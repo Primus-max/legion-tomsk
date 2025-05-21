@@ -309,6 +309,12 @@ onUnmounted(() => {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: box-shadow 0.2s, color 0.2s;
+    border-radius: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    display: block;
+    text-align: center;
     &:hover {
       box-shadow: 0 0 16px #ffd60088;
       color: #fff;
@@ -353,6 +359,11 @@ onUnmounted(() => {
     padding: 0 8vw;
     transition: none;
     transform: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .portfolio-section__slides::-webkit-scrollbar {
+    display: none;
   }
   .portfolio-section__slide {
     min-width: 80vw;
