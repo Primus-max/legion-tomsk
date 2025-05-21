@@ -23,7 +23,7 @@
         <tbody>
           <tr v-for="item in prices[activeCategory]" :key="item.title">
             <td class="price-section__td">{{ item.title }}</td>
-            <td class="price-section__td price-section__td--price">{{ item.price }}</td>
+            <td class="price-section__td price-section__td--price">{{ item.price }} ₽</td>
           </tr>
         </tbody>
       </table>
@@ -159,11 +159,11 @@ const activeCategory = ref(categories[0].key);
     font-size: 0.98rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    padding: 6px 16px;
+    padding: 10px 20px;
     text-align: left;
   }
   &__td {
-    padding: 6px 16px;
+    padding: 10px 20px;
     font-size: 1.08rem;
     color: #fff;
     font-weight: 600;
@@ -174,6 +174,10 @@ const activeCategory = ref(categories[0].key);
       font-size: 1.13rem;
       letter-spacing: 0.03em;
     }
+  }
+  &__table tr:last-child .price-section__td {
+    padding-bottom: 4px;
+    padding-top: 10px;
   }
   &__all {
     display: block;
