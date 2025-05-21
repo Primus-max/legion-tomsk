@@ -10,6 +10,7 @@ export default {
 <template>
   <div id="app">
     <Header />
+    <div style="height: 64px;"></div>
     <router-view />
   </div>
 </template>
