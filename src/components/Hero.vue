@@ -1,5 +1,7 @@
 <template>
   <section class="hero">
+    <ImperialLampLine class="hero__lamp" :width="'100%'" :height="'6px'" :glow="'0 8px 32px 0 #FFD600cc'" :gradient="'linear-gradient(90deg, #FFD600 30%, #fff 100%)'" />
+    <div class="hero__lamp-glow" />
     <div class="hero__content container">
       <h1 class="hero__title">Премиальная перетяжка салона</h1>
       <p class="hero__subtitle">Преобразите интерьер вашего автомобиля с помощью профессиональной перетяжки салона премиум-класса</p>
@@ -19,6 +21,7 @@
 import { computed } from 'vue';
 
 import { useTheme } from '../stores/theme';
+import ImperialLampLine from './ImperialLampLine.vue';
 import ServiceCard from './ServiceCard.vue';
 
 const themeStore = useTheme()
@@ -60,32 +63,36 @@ const services = [
   background: #111;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
+  &__lamp {
+    margin-bottom: 0;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #ffd600 30%, #fff 100%);
-    box-shadow: 0 0 20px #ffd600;
+    position: absolute;
+    z-index: 2;
   }
 
-  &::after {
-    content: '';
+  &__lamp-glow {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, #ffd60008 0%, transparent 70%);
+    top: 6px;
+    left: 0;
+    width: 100%;
+    height: 80px;
     pointer-events: none;
+    z-index: 1;
+    background: radial-gradient(ellipse at center, #ffe06655 0%, #ffd60022 40%, transparent 100%);
+    filter: blur(4px);
+    opacity: 0.85;
   }
 
   &__content {
     position: relative;
-    z-index: 1;
+    z-index: 3;
     padding: clamp(40px, 8vh, 60px) max(16px, calc((100% - 1280px) / 2));
     margin: 0 auto;
     width: 100%;
     max-width: 100%;
+    text-align: center;
   }
 
   &__title {
@@ -94,13 +101,16 @@ const services = [
     margin-bottom: clamp(20px, 4vh, 24px);
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: linear-gradient(90deg, #fff 50%, #ffd600 100%);
+    background: linear-gradient(90deg, #fff 40%, #ffd600 60%, #fff 100%);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: transparent;
     text-shadow: 0 4px 24px #ffd60055;
     filter: drop-shadow(0 2px 8px #ffd60044);
-    animation: title-glow 3s ease-in-out infinite alternate;
+    animation: title-glow 3s ease-in-out infinite alternate, title-gradient-move 4s linear infinite alternate;
+    text-align: center;
   }
 
   &__subtitle {
@@ -110,6 +120,7 @@ const services = [
     color: rgba(255, 255, 255, 0.9);
     max-width: 800px;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    text-align: center;
   }
 
   &__services {
@@ -120,6 +131,7 @@ const services = [
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 max(16px, 3vw);
+    justify-items: center;
   }
 }
 
@@ -129,6 +141,15 @@ const services = [
   }
   to {
     text-shadow: 0 0 25px #ffd60044, 0 0 50px #ffd60022;
+  }
+}
+
+@keyframes title-gradient-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
   }
 }
 </style> 
