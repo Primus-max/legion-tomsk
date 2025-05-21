@@ -1,5 +1,5 @@
 <template>
-  <section class="hero" :class="{ 'hero--dark': isDark }">
+  <section class="hero">
     <div class="hero__content container">
       <h1 class="hero__title">Премиальная перетяжка салона</h1>
       <p class="hero__subtitle">Преобразите интерьер вашего автомобиля с помощью профессиональной перетяжки салона премиум-класса</p>
@@ -54,9 +54,10 @@ const services = [
 
 <style lang="scss" scoped>
 .hero {
-  padding: 60px 0;
-  background: var(--color-background);
   position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #111;
   overflow: hidden;
 
   &::before {
@@ -65,62 +66,69 @@ const services = [
     top: 0;
     left: 0;
     right: 0;
-    height: 5px;
-    background: var(--color-accent);
+    height: 4px;
+    background: linear-gradient(90deg, #ffd600 30%, #fff 100%);
+    box-shadow: 0 0 20px #ffd600;
   }
 
-  &--dark {
-    background: var(--color-background-soft);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, #ffd60008 0%, transparent 70%);
+    pointer-events: none;
   }
 
   &__content {
-    text-align: center;
-    max-width: 1200px;
+    position: relative;
+    z-index: 1;
+    padding: clamp(40px, 8vh, 60px) max(16px, calc((100% - 1280px) / 2));
     margin: 0 auto;
-    padding: 0 20px;
+    width: 100%;
+    max-width: 100%;
   }
 
   &__title {
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 900;
-    margin-bottom: 20px;
-    color: #fff;
+    margin-bottom: clamp(20px, 4vh, 24px);
     text-transform: uppercase;
     letter-spacing: 2px;
-    background: linear-gradient(90deg, #fff 60%, #ffd600 100%);
+    background: linear-gradient(90deg, #fff 50%, #ffd600 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    text-fill-color: transparent;
-    text-shadow: 0 4px 24px #ffd60055, 0 1px 0 #fff;
+    text-shadow: 0 4px 24px #ffd60055;
     filter: drop-shadow(0 2px 8px #ffd60044);
-    transition: text-shadow 0.3s;
-
-    @media (max-width: 768px) {
-      font-size: 2rem;
-    }
+    animation: title-glow 3s ease-in-out infinite alternate;
   }
 
   &__subtitle {
-    font-size: 1.25rem;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
     line-height: 1.6;
-    margin-bottom: 40px;
-    color: #fff;
+    margin: 0 auto clamp(30px, 6vh, 50px);
+    color: rgba(255, 255, 255, 0.9);
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    text-shadow: 0 2px 8px #ffd60022;
-    opacity: 0.95;
-    @media (max-width: 768px) {
-      font-size: 1rem;
-    }
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   }
 
   &__services {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 max(16px, 3vw);
+  }
+}
+
+@keyframes title-glow {
+  from {
+    text-shadow: 0 0 20px #ffd60022, 0 0 40px #ffd60011;
+  }
+  to {
+    text-shadow: 0 0 25px #ffd60044, 0 0 50px #ffd60022;
   }
 }
 </style> 
