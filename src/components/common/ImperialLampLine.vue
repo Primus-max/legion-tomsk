@@ -14,7 +14,7 @@ const props = defineProps({
   isActive: { type: Boolean, default: false }
 })
 
-const emits = defineEmits(['activated'])
+const emits = defineEmits(['activated', 'animation-end'])
 const lampRef = ref(null)
 const isActiveInternal = ref(false)
 let observer = null
@@ -25,6 +25,33 @@ watch(() => props.isActive, (val) => {
     emits('activated')
   }
 })
+
+onMounted(() => {
+  observer = new window.IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting && !isActiveInternal.value) {
+        isActiveInternal.value = true
+        emits('activated')
+      }
+    },
+    { threshold: 0.3 }
+  )
+  if (lampRef.value) {
+    observer.observe(lampRef.value)
+  }
+})
+
+onUnmounted(() => {
+  if (lampRef.value && observer) {
+    observer.unobserve(lampRef.value)
+  }
+})
+
+function onLampAnimationEnd(e) {
+  if (e.animationName === 'lamp-turn-on') {
+    emits('animation-end')
+  }
+}
 </script>
 
 <template>
@@ -37,6 +64,7 @@ watch(() => props.isActive, (val) => {
         '--lamp-radius': borderRadius,
         width: width
       }"
+      @animationend="onLampAnimationEnd"
     />
     <div class="imperial-lamp-glow" :class="{ active: isActiveInternal }" />
   </div>
