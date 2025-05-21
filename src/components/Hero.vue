@@ -74,15 +74,21 @@ const services = [
 
   &__lamp-glow {
     position: absolute;
-    top: 6px;
+    top: 0;
     left: 0;
     width: 100%;
-    height: 80px;
+    height: 160px;
     pointer-events: none;
     z-index: 1;
-    background: radial-gradient(ellipse at center, #ffe06655 0%, #ffd60022 40%, transparent 100%);
-    filter: blur(4px);
-    opacity: 0.85;
+    background: radial-gradient(
+      ellipse at top,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 214, 0, 0.05) 50%,
+      transparent 100%
+    );
+    filter: blur(20px);
+    opacity: 0;
+    animation: hero-glow-appear 2.5s ease-out forwards;
   }
 
   &__content {
@@ -150,6 +156,18 @@ const services = [
   }
   100% {
     background-position: 100% 50%;
+  }
+}
+
+@keyframes hero-glow-appear {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style> 
