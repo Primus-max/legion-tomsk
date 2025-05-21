@@ -46,6 +46,7 @@ watch(() => props.isActive, (val) => {
 .imperial-lamp-wrapper {
   position: relative;
   width: 100%;
+  min-height: var(--lamp-height, 6px);
 }
 
 .imperial-lamp-line {
@@ -57,11 +58,10 @@ watch(() => props.isActive, (val) => {
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  opacity: 0;
-  transition: opacity 0.2s;
+  opacity: 1;
+  transition: box-shadow 0.2s;
 }
 .imperial-lamp-line.active {
-  opacity: 1;
   animation: lamp-turn-on 2.5s ease-out forwards;
 }
 

@@ -1,20 +1,16 @@
 <template>
   <section class="imperial-section">
-    <ImperialLampLine class="imperial-section__lamp" :width="lampWidth" :border-radius="lampRadius" @activated="onLampActivated" />
-    <transition name="imperial-fade">
-      <div v-if="contentVisible" class="imperial-section__content">
-        <div class="section-inner">
-          <h2 v-if="title" class="imperial-section__title" :data-text="title">{{ title }}</h2>
-          <slot />
-        </div>
+    <ImperialLampLine class="imperial-section__lamp" :width="lampWidth" :border-radius="lampRadius" />
+    <div class="imperial-section__content">
+      <div class="section-inner">
+        <h2 v-if="title" class="imperial-section__title" :data-text="title">{{ title }}</h2>
+        <slot />
       </div>
-    </transition>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 import ImperialLampLine from '../ImperialLampLine.vue';
 
 defineProps({
@@ -31,11 +27,6 @@ defineProps({
     default: '0'
   }
 })
-
-const contentVisible = ref(false)
-function onLampActivated() {
-  setTimeout(() => { contentVisible.value = true }, 600)
-}
 </script>
 
 <style scoped>
@@ -105,16 +96,6 @@ function onLampActivated() {
   to {
     text-shadow: 0 0 25px #ffd60044, 0 0 50px #ffd60022;
   }
-}
-
-.imperial-fade-enter-active, .imperial-fade-leave-active {
-  transition: opacity 0.7s cubic-bezier(.4,1.4,.6,1);
-}
-.imperial-fade-enter-from, .imperial-fade-leave-to {
-  opacity: 0;
-}
-.imperial-fade-enter-to, .imperial-fade-leave-from {
-  opacity: 1;
 }
 
 .section-inner {

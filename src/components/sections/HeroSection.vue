@@ -80,6 +80,9 @@ const services = [
 </script>
 
 <style lang="scss" scoped>
+.hero-section {
+  margin-top: 5rem;
+}
 .hero-section__content {
   position: relative;
   z-index: 3;
