@@ -1,63 +1,52 @@
-<template>
-  <div class="imperial-lamp-wrapper" ref="lampRef">
-    <div
-      class="imperial-lamp-line"
-      :class="{ active: isActive }"
-      :style="{
-        '--lamp-height': height,
-        '--lamp-radius': borderRadius,
-        width: width
-      }"
-    />
-    <div class="imperial-lamp-glow" :class="{ active: isActive }" />
-  </div>
-</template>
-
 <script setup>
 import {
   defineEmits,
   onMounted,
   onUnmounted,
   ref,
+  watch,
 } from 'vue';
 
 const props = defineProps({
   width: { type: String, default: '100%' },
   height: { type: String, default: '6px' },
-  borderRadius: { type: String, default: '2px' }
+  borderRadius: { type: String, default: '2px' },
+  isActive: { type: Boolean, default: false }
 })
 
 const emits = defineEmits(['activated'])
 const lampRef = ref(null)
-const isActive = ref(false)
+const isActiveInternal = ref(false)
 let observer = null
 
-onMounted(() => {
-  observer = new window.IntersectionObserver(
-    ([entry]) => {
-      if (entry.isIntersecting && !isActive.value) {
-        isActive.value = true
-        emits('activated')
-      }
-    },
-    { threshold: 0.3 }
-  )
-  if (lampRef.value) {
-    observer.observe(lampRef.value)
-  }
-})
-
-onUnmounted(() => {
-  if (lampRef.value && observer) {
-    observer.unobserve(lampRef.value)
+watch(() => props.isActive, (val) => {
+  if (val && !isActiveInternal.value) {
+    isActiveInternal.value = true
+    emits('activated')
   }
 })
 </script>
+
+<template>
+  <div class="imperial-lamp-wrapper" ref="lampRef">
+    <div
+      class="imperial-lamp-line"
+      :class="{ active: isActiveInternal }"
+      :style="{
+        '--lamp-height': height,
+        '--lamp-radius': borderRadius,
+        width: width
+      }"
+    />
+    <div class="imperial-lamp-glow" :class="{ active: isActiveInternal }" />
+  </div>
+</template>
 
 <style scoped>
 .imperial-lamp-wrapper {
   position: relative;
   width: 100%;
+  min-height: var(--lamp-height, 6px);
 }
 
 .imperial-lamp-line {
@@ -69,11 +58,10 @@ onUnmounted(() => {
   margin: 0 auto;
   position: relative;
   z-index: 2;
-  opacity: 0;
-  transition: opacity 0.2s;
+  opacity: 1;
+  transition: box-shadow 0.2s;
 }
 .imperial-lamp-line.active {
-  opacity: 1;
   animation: lamp-turn-on 2.5s ease-out forwards;
 }
 
