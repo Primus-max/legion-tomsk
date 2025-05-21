@@ -27,6 +27,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="price-section__note">
+        Цена рассчитывается индивидуально с учётом марки автомобиля и выбранного материала.
+      </div>
     </div>
     <router-link to="/prices" class="price-section__all">Смотреть полный прайс</router-link>
   </ImperialSection>
@@ -131,13 +134,23 @@ const activeCategory = ref(categories[0].key);
     overflow: hidden;
     background: rgba(24,24,24,0.98);
     box-shadow: 0 2px 24px #ffd60011;
-    border: 1.5px solid #ffd60022;
     padding: 0;
   }
   &__table {
     width: 100%;
     border-collapse: collapse;
     background: transparent;
+    border: none;
+  }
+  &__th, &__td {
+    border: none !important;
+    border-bottom: 1px solid #222 !important;
+  }
+  &__th--price, &__td--price {
+    text-align: right !important;
+  }
+  &__tr:last-child &__td {
+    border-bottom: none !important;
   }
   &__th {
     background: #181818;
@@ -146,28 +159,20 @@ const activeCategory = ref(categories[0].key);
     font-size: 0.98rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    padding: 18px 20px;
+    padding: 6px 16px;
     text-align: left;
-    border-bottom: 1px solid #ffd60011;
-    &:last-child {
-      text-align: right;
-    }
   }
   &__td {
-    padding: 18px 20px;
+    padding: 6px 16px;
     font-size: 1.08rem;
     color: #fff;
     font-weight: 600;
-    border-bottom: 1px solid #ffd60011;
     &--price {
       color: #ffd600;
       text-align: right;
       font-weight: 900;
       font-size: 1.13rem;
       letter-spacing: 0.03em;
-    }
-    &:last-child {
-      text-align: right;
     }
   }
   &__all {
@@ -191,6 +196,16 @@ const activeCategory = ref(categories[0].key);
       color: #fff;
       background: none;
     }
+  }
+  &__note {
+    color: #aaa;
+    font-size: 0.92rem;
+    text-align: left;
+    margin: 24px auto 24px auto;
+    letter-spacing: 0.01em;
+    display: block;
+    max-width: 90%;
+    width: fit-content;
   }
 }
 </style> 
