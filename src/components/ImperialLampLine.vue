@@ -4,8 +4,6 @@
       class="imperial-lamp-line"
       :style="{
         '--lamp-height': height,
-        '--lamp-glow': glow,
-        '--lamp-gradient': gradient,
         '--lamp-radius': borderRadius,
         width: width
       }"
@@ -18,8 +16,6 @@
 const props = defineProps({
   width: { type: String, default: '100%' },
   height: { type: String, default: '6px' },
-  glow: { type: String, default: '0 8px 32px 0 #FFD600cc' },
-  gradient: { type: String, default: 'linear-gradient(90deg, #fff 70%, #ffd600 100%)' },
   borderRadius: { type: String, default: '2px' }
 })
 </script>
@@ -34,8 +30,11 @@ const props = defineProps({
   display: block;
   height: var(--lamp-height);
   border-radius: var(--lamp-radius);
-  background: var(--lamp-gradient);
-  box-shadow: var(--lamp-glow);
+  background: #ffffff;
+  box-shadow: 
+    0 0 10px #ffffff,
+    0 0 20px #ffd600,
+    0 0 30px #ffd60066;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -64,24 +63,47 @@ const props = defineProps({
 @keyframes lamp-turn-on {
   0% {
     opacity: 0;
+    box-shadow: none;
   }
   10% {
     opacity: 1;
+    box-shadow: 
+      0 0 10px #ffffff,
+      0 0 20px #ffd600,
+      0 0 30px #ffd60066;
   }
   15% {
     opacity: 0.4;
+    box-shadow: 
+      0 0 5px #ffffff88,
+      0 0 10px #ffd60088;
   }
   20% {
     opacity: 1;
+    box-shadow: 
+      0 0 10px #ffffff,
+      0 0 20px #ffd600,
+      0 0 30px #ffd60066;
   }
   30% {
     opacity: 0.4;
+    box-shadow: 
+      0 0 5px #ffffff88,
+      0 0 10px #ffd60088;
   }
   35% {
     opacity: 1;
+    box-shadow: 
+      0 0 10px #ffffff,
+      0 0 20px #ffd600,
+      0 0 30px #ffd60066;
   }
   100% {
     opacity: 1;
+    box-shadow: 
+      0 0 10px #ffffff,
+      0 0 20px #ffd600,
+      0 0 30px #ffd60066;
   }
 }
 
