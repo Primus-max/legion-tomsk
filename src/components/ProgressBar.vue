@@ -11,12 +11,16 @@ import {
   ref,
 } from 'vue';
 
-const progress = ref(100);
+const progress = ref(0);
 
 const updateProgress = () => {
   const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const scrollTop = window.scrollY;
-  progress.value = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 100;
+  if (scrollHeight > 0 && scrollTop > 0) {
+    progress.value = (scrollTop / scrollHeight) * 100;
+  } else {
+    progress.value = 0;
+  }
 };
 
 onMounted(() => {
