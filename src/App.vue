@@ -16,6 +16,12 @@ export default {
 </template>
 
 <style>
+:root {
+  --color-bg: #181818;
+  --color-accent: #ffd600;
+  --color-accent-dark: #e6b800;
+  --color-text: #fff;
+}
 #app {
   min-height: 100vh;
   display: flex;

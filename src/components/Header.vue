@@ -17,10 +17,6 @@
       <div class="header__contacts">
         <a href="tel:+78120000000" class="header__phone">+7 (812) 000-00-00</a>
         <button class="header__cta">Получить расчет</button>
-        <button class="header__theme" @click="toggleTheme" :aria-label="theme === 'light' ? 'Включить тёмную тему' : 'Включить светлую тему'">
-          <span v-if="theme === 'light'">🌙</span>
-          <span v-else>☀️</span>
-        </button>
         <button class="header__burger" @click="menuOpen = !menuOpen" aria-label="Открыть меню">
           <span :class="{ 'open': menuOpen }"></span>
           <span :class="{ 'open': menuOpen }"></span>
@@ -40,18 +36,7 @@ export default {
   components: { ProgressBar },
   data() {
     return {
-      menuOpen: false,
-      theme: localStorage.getItem('theme') || 'light',
-    }
-  },
-  mounted() {
-    document.documentElement.setAttribute('data-theme', this.theme);
-  },
-  methods: {
-    toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', this.theme);
-      localStorage.setItem('theme', this.theme);
+      menuOpen: false
     }
   },
   watch: {
@@ -136,20 +121,6 @@ export default {
   background: var(--color-accent-dark);
   color: var(--color-bg);
   box-shadow: 0 6px 24px rgba(255,214,0,0.18);
-}
-.header__theme {
-  background: none;
-  border: none;
-  font-size: 1.6rem;
-  margin-left: 0.5rem;
-  cursor: pointer;
-  color: var(--color-accent);
-  transition: color 0.2s;
-  outline: none;
-  padding: 0 0.2em;
-}
-.header__theme:hover {
-  color: var(--color-accent-dark);
 }
 .header__burger {
   display: none;
