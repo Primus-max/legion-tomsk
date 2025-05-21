@@ -141,17 +141,21 @@ const imageSource = computed(() => props.image || placeholderImage)
   }
 
   &__title {
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     font-weight: 800;
     margin: 0 0 clamp(8px, 2vw, 12px);
     color: #ffd600;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-shadow: 0 2px 12px #ffd60033;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    
+    word-break: keep-all;
+    overflow-wrap: normal;
+    white-space: normal;
+    hyphens: none;
+    text-align: center;
+    padding: 0 8px;
+
     &::after {
       content: '';
       display: block;
@@ -161,6 +165,13 @@ const imageSource = computed(() => props.image || placeholderImage)
       margin-top: clamp(8px, 2vw, 12px);
       border-radius: 2px;
       box-shadow: 0 0 10px #ffd60066;
+    }
+  }
+
+  @media (max-width: 600px) {
+    &__title {
+      font-size: 1rem;
+      padding: 0 2px;
     }
   }
 

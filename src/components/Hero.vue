@@ -78,7 +78,7 @@ const services = [
   },
   {
     id: 7,
-    title: 'EVO и 3D ковры',
+    title: 'EVO&nbsp;и&nbsp;3D&nbsp;ковры',
     description: 'Изготовление современных ковров с высоким бортом и органайзеров',
     image: '/images/carpets.svg',
     link: '/services/carpets',
