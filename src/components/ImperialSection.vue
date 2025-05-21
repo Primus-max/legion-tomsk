@@ -1,6 +1,6 @@
 <template>
   <section class="imperial-section">
-    <ImperialLampLine class="imperial-section__lamp" @activated="onLampActivated" />
+    <ImperialLampLine class="imperial-section__lamp" :width="lampWidth" :border-radius="lampRadius" @activated="onLampActivated" />
     <transition name="imperial-fade">
       <div v-if="contentVisible" class="imperial-section__content">
         <h2 v-if="title" class="imperial-section__title" :data-text="title">{{ title }}</h2>
@@ -19,6 +19,14 @@ defineProps({
   title: {
     type: String,
     required: false
+  },
+  lampWidth: {
+    type: String,
+    default: '100%'
+  },
+  lampRadius: {
+    type: String,
+    default: '0'
   }
 })
 
