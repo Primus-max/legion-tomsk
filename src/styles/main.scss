@@ -1,0 +1,101 @@
+// Цветовая палитра (имперский стиль)
+$yellow: #FFD600;
+$yellow-dark: #FFC107;
+$black: #181818;
+$white: #fff;
+$gray: #232323;
+
+:root {
+  --color-bg: #fff;
+  --color-text: #181818;
+  --color-accent: #FFD600;
+  --color-accent-dark: #FFC107;
+  --color-card: #f7f7f7;
+}
+[data-theme='dark'] {
+  --color-bg: #181818;
+  --color-text: #fff;
+  --color-accent: #FFD600;
+  --color-accent-dark: #FFC107;
+  --color-card: #232323;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Manrope', 'Inter', 'Roboto', Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-text);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-family: 'Manrope', 'Inter', 'Roboto', Arial, sans-serif;
+}
+
+a {
+  color: var(--color-accent-dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+// Mobile First
+@media (max-width: 600px) {
+  main {
+    padding: 0.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+
+// Сброс таблиц
+th, td {
+  padding: 0.5em 1em;
+  border: 1px solid var(--color-card);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 2em;
+  background: var(--color-card);
+}
+caption {
+  caption-side: top;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+// Кнопки
+.button, button {
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: none;
+  border-radius: 6px;
+  padding: 0.7em 2em;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(255,214,0,0.10);
+  transition: background 0.2s, box-shadow 0.2s, color 0.2s;
+}
+.button:hover, button:hover {
+  background: var(--color-accent-dark);
+  color: var(--color-bg);
+  box-shadow: 0 6px 24px rgba(255,214,0,0.18);
+} 
