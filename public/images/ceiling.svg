@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ceilingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#222;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="pattern" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 0 L10 10 M10 0 L0 10" stroke="#FFD600" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="#181818"/>
+  <!-- Потолок -->
+  <path d="M50 50 h300 v125 h-300z" fill="url(#ceilingGrad)" stroke="#FFD600" stroke-width="2"/>
+  <path d="M50 50 h300 v125 h-300z" fill="url(#pattern)"/>
+  <text x="200" y="200" font-family="Arial" font-size="16" fill="#FFD600" text-anchor="middle">Перетяжка потолка</text>
+</svg> 

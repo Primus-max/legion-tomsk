@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#181818"/>
+  <!-- Пяльцы -->
+  <circle cx="200" cy="112" r="60" fill="none" stroke="#FFD600" stroke-width="2"/>
+  <circle cx="200" cy="112" r="50" fill="none" stroke="#FFD600" stroke-width="1"/>
+  <!-- Узор -->
+  <path d="M170 112 Q200 82 230 112 Q200 142 170 112" stroke="#FFD600" stroke-width="1" fill="none"/>
+  <path d="M180 92 L220 132 M220 92 L180 132" stroke="#FFD600" stroke-width="1"/>
+  <text x="200" y="200" font-family="Arial" font-size="16" fill="#FFD600" text-anchor="middle">Вышивка</text>
+</svg> 

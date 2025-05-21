@@ -1,7 +1,7 @@
 <template>
   <router-link :to="link" class="service-card">
     <div class="service-card__image">
-      <img :src="image || placeholder" :alt="title">
+      <img :src="imageSource" :alt="title">
       <div class="service-card__overlay"></div>
     </div>
     <div class="service-card__content">
@@ -17,6 +17,8 @@
 
 <script setup>
 import { computed } from 'vue';
+
+import placeholderImage from '../assets/placeholder.svg?url';
 
 const props = defineProps({
   title: {
@@ -43,9 +45,7 @@ const props = defineProps({
   }
 })
 
-const placeholder = computed(() =>
-  'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=400&q=80'
-)
+const imageSource = computed(() => props.image || placeholderImage)
 </script>
 
 <style lang="scss" scoped>

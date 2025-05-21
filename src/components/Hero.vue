@@ -32,25 +32,57 @@ const services = [
     id: 1,
     title: 'Перетяжка сидений',
     description: 'Полная перетяжка сидений премиальной кожей с учётом всех особенностей вашего автомобиля',
-    image: '/images/seats.jpg',
+    image: '/images/seats.svg',
     link: '/services/seats',
     price: 25000
   },
   {
     id: 2,
-    title: 'Перетяжка руля',
-    description: 'Профессиональная перетяжка руля натуральной кожей с декоративной прострочкой',
-    image: '/images/steering.jpg',
-    link: '/services/steering',
-    price: 5000
+    title: 'Тюнинг',
+    description: 'Профессиональный тюнинг салона автомобиля с использованием премиальных материалов и технологий',
+    image: '/images/tuning.svg',
+    link: '/services/tuning',
+    price: 30000
   },
   {
     id: 3,
-    title: 'Перетяжка потолка',
-    description: 'Замена обивки потолка алькантарой или другими премиальными материалами',
-    image: '/images/ceiling.jpg',
-    link: '/services/ceiling',
+    title: 'Реставрация',
+    description: 'Восстановление и реставрация элементов салона до состояния нового',
+    image: '/images/restoration.svg',
+    link: '/services/restoration',
+    price: 20000
+  },
+  {
+    id: 4,
+    title: 'Изготовление и пошив',
+    description: 'Индивидуальный пошив элементов салона по вашим размерам и пожеланиям',
+    image: '/images/sewing.svg',
+    link: '/services/sewing',
     price: 15000
+  },
+  {
+    id: 5,
+    title: 'Вышивка',
+    description: 'Нанесение вышивки любой сложности на элементы салона',
+    image: '/images/embroidery.svg',
+    link: '/services/embroidery',
+    price: 5000
+  },
+  {
+    id: 6,
+    title: 'Автоэлектрика',
+    description: 'Установка и настройка электрооборудования в салоне автомобиля',
+    image: '/images/electronics.svg',
+    link: '/services/electronics',
+    price: 10000
+  },
+  {
+    id: 7,
+    title: 'EVO и 3D ковры',
+    description: 'Изготовление современных ковров с высоким бортом и органайзеров',
+    image: '/images/carpets.svg',
+    link: '/services/carpets',
+    price: 8000
   }
 ]
 </script>
