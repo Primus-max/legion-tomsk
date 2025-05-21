@@ -178,7 +178,7 @@ const placeholder = computed(() =>
     margin-top: auto;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 12px;
   }
 
@@ -188,26 +188,31 @@ const placeholder = computed(() =>
     color: #ffd600;
     text-shadow: 0 2px 8px #ffd60044;
     letter-spacing: 0.5px;
+    text-align: center;
   }
 
   &__order {
-    background: #ffd600;
-    color: #181818;
-    border: none;
+    background: transparent;
+    color: #ffd600;
+    border: 2px solid #ffd600;
     border-radius: 6px;
     padding: 0.5em 1.2em;
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 2px 8px #ffd60044;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
     text-transform: uppercase;
     letter-spacing: 1px;
-    &:hover {
-      background: #e6b800;
-      color: #fff;
-      box-shadow: 0 4px 16px #ffd60066;
-    }
+    text-align: center;
+    min-width: 120px;
+  }
+
+  &__order:hover {
+    background: #ffd600;
+    color: #181818;
+    box-shadow: 0 4px 16px #ffd60066;
+    border-color: #ffd600;
   }
 }
 </style> 
