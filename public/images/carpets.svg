@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0 0 L20 0 L20 20 L0 20 Z" fill="none" stroke="#FFD600" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="400" height="225" fill="#181818"/>
+  <!-- 3D коврик -->
+  <path d="M100 50 h200 v125 h-200z" fill="url(#grid)" stroke="#FFD600" stroke-width="2"/>
+  <!-- Бортик -->
+  <path d="M100 50 v-10 h200 v10" fill="none" stroke="#FFD600" stroke-width="2"/>
+  <text x="200" y="200" font-family="Arial" font-size="16" fill="#FFD600" text-anchor="middle">EVO и 3D ковры</text>
+</svg> 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#181818"/>
+  <path d="M160 90 h80 v45 h-80z" stroke="#FFD600" stroke-width="2" fill="none"/>
+  <path d="M180 112.5 l20 -15 l20 15" stroke="#FFD600" stroke-width="2" fill="none"/>
+  <text x="200" y="160" font-family="Arial" font-size="14" fill="#FFD600" text-anchor="middle">LEGION TOMSK</text>
+</svg> 

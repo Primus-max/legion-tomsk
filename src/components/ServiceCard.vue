@@ -1,18 +1,25 @@
 <template>
   <router-link :to="link" class="service-card">
     <div class="service-card__image">
-      <img :src="image" :alt="title">
+      <img :src="imageSource" :alt="title">
       <div class="service-card__overlay"></div>
     </div>
     <div class="service-card__content">
       <h3 class="service-card__title">{{ title }}</h3>
       <p class="service-card__description">{{ description }}</p>
-      <div class="service-card__price" v-if="price">от {{ price }} ₽</div>
+      <div class="service-card__bottom">
+        <div class="service-card__price" v-if="price">от {{ price }} ₽</div>
+        <button class="service-card__order">Заказать</button>
+      </div>
     </div>
   </router-link>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
+import placeholderImage from '../assets/placeholder.svg?url';
+
 const props = defineProps({
   title: {
     type: String,
@@ -24,17 +31,21 @@ const props = defineProps({
   },
   image: {
     type: String,
-    required: true
+    required: false,
+    default: ''
   },
   link: {
     type: String,
-    required: true
+    required: false,
+    default: '#'
   },
   price: {
     type: Number,
     default: null
   }
 })
+
+const imageSource = computed(() => props.image || placeholderImage)
 </script>
 
 <style lang="scss" scoped>
@@ -51,7 +62,8 @@ const props = defineProps({
 
 .service-card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 100%;
   border-radius: clamp(12px, 2vw, 16px);
@@ -104,6 +116,7 @@ const props = defineProps({
       height: 100%;
       object-fit: cover;
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #222;
     }
   }
 
@@ -122,20 +135,27 @@ const props = defineProps({
     padding: clamp(16px, 4vw, 24px);
     width: 100%;
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
   }
 
   &__title {
-    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     font-weight: 800;
     margin: 0 0 clamp(8px, 2vw, 12px);
     color: #ffd600;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     text-shadow: 0 2px 12px #ffd60033;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    
+    word-break: keep-all;
+    overflow-wrap: normal;
+    white-space: normal;
+    hyphens: none;
+    text-align: center;
+    padding: 0 8px;
+
     &::after {
       content: '';
       display: block;
@@ -145,6 +165,13 @@ const props = defineProps({
       margin-top: clamp(8px, 2vw, 12px);
       border-radius: 2px;
       box-shadow: 0 0 10px #ffd60066;
+    }
+  }
+
+  @media (max-width: 600px) {
+    &__title {
+      font-size: 1rem;
+      padding: 0 2px;
     }
   }
 
@@ -158,12 +185,45 @@ const props = defineProps({
     overflow-wrap: break-word;
   }
 
+  &__bottom {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
   &__price {
     font-size: clamp(1.1rem, 2.5vw, 1.3rem);
     font-weight: 700;
     color: #ffd600;
     text-shadow: 0 2px 8px #ffd60044;
     letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  &__order {
+    background: transparent;
+    color: #ffd600;
+    border: 2px solid #ffd600;
+    border-radius: 6px;
+    padding: 0.5em 1.2em;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s, border-color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  &__order:hover {
+    background: #ffd600;
+    color: #181818;
+    box-shadow: 0 4px 16px #ffd60066;
+    border-color: #ffd600;
   }
 }
 </style> 
