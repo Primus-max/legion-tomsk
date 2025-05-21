@@ -33,7 +33,6 @@
             class="portfolio-section__slide"
           >
             <img :src="item.image" :alt="item.title" />
-            <div class="portfolio-section__caption">{{ item.title }}</div>
           </div>
         </div>
       </div>
@@ -161,47 +160,34 @@ onUnmounted(() => {
 
   &__tabs {
     display: flex;
-    gap: 0;
+    gap: 8px;
     justify-content: center;
-    margin: 32px 0 24px 0;
+    margin: 16px 0 24px 0;
     flex-wrap: wrap;
-    border-bottom: 2px solid #ffd60044;
+    border-bottom: 1px solid #ffd60022;
   }
 
   &__tab {
+    color: #fff;
+    border-bottom: 2px solid transparent;
     background: none;
-    border: none;
-    color: #ffd600;
     font-weight: 700;
-    font-size: 1.1rem;
-    padding: 0.7em 2em 0.7em 2em;
+    font-size: 0.92rem;
+    padding: 0.25em 0.7em;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    transition: color 0.2s, border-color 0.2s;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 3px solid transparent;
-    margin-bottom: -2px;
-    position: relative;
-    &::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 20%;
-      height: 60%;
-      width: 1px;
-      background: #ffd60044;
-    }
-    &:last-child::after {
-      display: none;
-    }
+    letter-spacing: 0.02em;
+    border-radius: 0;
+    min-width: unset;
     &.active {
-      color: #fff;
-      border-bottom: 3px solid #ffd600;
-      background: rgba(255, 214, 0, 0.1);
+      color: #ffd600;
+      border-bottom: 2px solid #ffd600;
+      background: none;
     }
-    &:hover {
-      color: #fff;
-      background: rgba(255, 214, 0, 0.05);
+    &:hover:not(.active) {
+      color: #ffd600cc;
+      border-bottom: 2px solid #ffd60055;
     }
   }
 
@@ -209,37 +195,44 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 900px;
-    margin: 0 auto 24px auto;
+    max-width: none;
+    margin: 0 auto 40px auto;
     position: relative;
+    gap: 0;
+    min-height: 320px;
   }
 
   &__arrow {
-    background: #181818;
-    border: 2px solid #ffd600;
-    color: #ffd600;
-    width: 44px;
-    height: 44px;
-    font-size: 2rem;
-    font-weight: 900;
+    background: none;
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    font-size: 1.4rem;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s, color 0.2s;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 4;
-    &.left {
-      left: -24px;
-    }
+    z-index: 2;
+    margin: 0;
+    left: -40px;
+    right: auto;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    transition: none;
     &.right {
-      right: -24px;
+      left: auto;
+      right: -40px;
     }
     &:hover {
-      background: #ffd600;
-      color: #181818;
+      color: #fff;
+      background: none;
+      box-shadow: none;
     }
     span {
       display: flex;
@@ -255,64 +248,121 @@ onUnmounted(() => {
     width: 100%;
     overflow: hidden;
     touch-action: pan-y;
+    margin: 0 64px;
   }
 
   &__slides {
     display: flex;
-    gap: 24px;
+    gap: 32px;
     min-width: 100%;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    justify-content: center;
   }
 
   &__slide {
     background: #181818;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-    border: 1.5px solid #ffd60044;
-    min-width: 220px;
-    max-width: 260px;
-    flex: 0 0 220px;
+    border-radius: 0;
+    box-shadow: 0 2px 16px #000a;
+    border: 1.5px solid #ffd60033;
+    min-width: 260px;
+    max-width: 320px;
+    flex: 0 0 260px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 18px 12px 12px 12px;
-    transition: box-shadow 0.3s;
+    padding: 36px 24px 24px 24px;
+    transition: box-shadow 0.3s, border-color 0.2s;
+    &:hover {
+      border-color: #ffd600;
+      box-shadow: 0 2px 16px #000a;
+    }
     img {
       width: 100%;
-      height: 120px;
+      height: 140px;
       object-fit: contain;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       background: #222;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px #ffd60022;
+      border-radius: 0;
+      box-shadow: 0 2px 8px #ffd60011;
     }
   }
 
   &__caption {
-    color: #ffd600;
+    color: #fff;
     font-weight: 700;
     font-size: 1rem;
     text-align: center;
     margin-top: 4px;
     text-shadow: 0 2px 8px #ffd60033;
+    letter-spacing: 0.04em;
   }
 
   &__all {
     display: inline-block;
-    background: none;
     border: 2px solid #ffd600;
     color: #ffd600;
+    background: none;
     font-weight: 700;
     padding: 0.8em 2em;
     margin: 24px auto 0;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
-    transition: background 0.2s, color 0.2s;
+    transition: box-shadow 0.2s, color 0.2s;
     &:hover {
-      background: #ffd600;
-      color: #181818;
+      box-shadow: 0 0 16px #ffd60088;
+      color: #fff;
+      background: none;
     }
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolio-section__tabs {
+    gap: 4px;
+    padding: 0 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .portfolio-section__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .portfolio-section__tab {
+    font-size: 0.85rem;
+    padding: 0.18em 0.5em;
+    min-width: unset;
+  }
+  .portfolio-section__carousel {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    position: relative;
+  }
+  .portfolio-section__slides {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    min-width: unset;
+    justify-content: flex-start;
+    padding: 0 8vw;
+    transition: none;
+    transform: none !important;
+  }
+  .portfolio-section__slide {
+    min-width: 80vw;
+    max-width: 80vw;
+    scroll-snap-align: center;
+    flex: 0 0 80vw;
+    margin: 0;
+  }
+  .portfolio-section__arrow {
+    display: none !important;
   }
 }
 </style> 
