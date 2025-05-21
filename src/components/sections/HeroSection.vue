@@ -1,6 +1,6 @@
 <template>
   <ImperialSection :title="title" class="hero-section">
-    <div class="hero-section__content container">
+    <div class="hero-section__content">
       <p class="hero-section__subtitle">Преобразите интерьер вашего автомобиля с помощью профессиональной перетяжки салона премиум-класса</p>
       <div class="hero-section__services">
         <ServiceCard
@@ -14,8 +14,8 @@
 </template>
 
 <script setup>
-import ImperialSection from '../ImperialSection.vue';
 import ServiceCard from '../ServiceCard.vue';
+import ImperialSection from './ImperialSection.vue';
 
 const title = 'Премиальная перетяжка салона';
 
@@ -83,10 +83,6 @@ const services = [
 .hero-section__content {
   position: relative;
   z-index: 3;
-  padding: clamp(40px, 8vh, 60px) max(16px, calc((100% - 1280px) / 2));
-  margin: 0 auto;
-  width: 100%;
-  max-width: 100%;
   text-align: center;
 }
 

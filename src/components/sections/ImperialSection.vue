@@ -3,8 +3,10 @@
     <ImperialLampLine class="imperial-section__lamp" :width="lampWidth" :border-radius="lampRadius" @activated="onLampActivated" />
     <transition name="imperial-fade">
       <div v-if="contentVisible" class="imperial-section__content">
-        <h2 v-if="title" class="imperial-section__title" :data-text="title">{{ title }}</h2>
-        <slot />
+        <div class="section-inner">
+          <h2 v-if="title" class="imperial-section__title" :data-text="title">{{ title }}</h2>
+          <slot />
+        </div>
       </div>
     </transition>
   </section>
@@ -13,7 +15,7 @@
 <script setup>
 import { ref } from 'vue';
 
-import ImperialLampLine from './ImperialLampLine.vue';
+import ImperialLampLine from '../ImperialLampLine.vue';
 
 defineProps({
   title: {
@@ -113,5 +115,13 @@ function onLampActivated() {
 }
 .imperial-fade-enter-to, .imperial-fade-leave-from {
   opacity: 1;
+}
+
+.section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(40px, 8vh, 60px) max(16px, calc((100% - 1280px) / 2));
+  width: 100%;
+  box-sizing: border-box;
 }
 </style> 

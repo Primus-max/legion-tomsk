@@ -54,7 +54,7 @@ import {
   watch,
 } from 'vue';
 
-import ImperialSection from '../ImperialSection.vue';
+import ImperialSection from './ImperialSection.vue';
 
 const categories = [
   { key: 'peretyazhka', label: 'Перетяжка' },
@@ -152,20 +152,167 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '../PortfolioPreview.vue';
-
 .portfolio-section {
-  @extend .portfolio-preview;
-}
+  margin: 64px auto 0 auto;
+  max-width: 1200px;
+  min-height: 600px;
+  padding: 0 0 48px 0;
+  z-index: 2;
 
-// Переопределяем все .portfolio-preview__* на .portfolio-section__*
-.portfolio-section__tabs { @extend .portfolio-preview__tabs; }
-.portfolio-section__tab { @extend .portfolio-preview__tab; }
-.portfolio-section__carousel-wrap { @extend .portfolio-preview__carousel-wrap; }
-.portfolio-section__arrow { @extend .portfolio-preview__arrow; }
-.portfolio-section__carousel { @extend .portfolio-preview__carousel; }
-.portfolio-section__slides { @extend .portfolio-preview__slides; }
-.portfolio-section__slide { @extend .portfolio-preview__slide; }
-.portfolio-section__caption { @extend .portfolio-preview__caption; }
-.portfolio-section__all { @extend .portfolio-preview__all; }
+  &__tabs {
+    display: flex;
+    gap: 0;
+    justify-content: center;
+    margin: 32px 0 24px 0;
+    flex-wrap: wrap;
+    border-bottom: 2px solid #ffd60044;
+  }
+
+  &__tab {
+    background: none;
+    border: none;
+    color: #ffd600;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.7em 2em 0.7em 2em;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    position: relative;
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: #ffd60044;
+    }
+    &:last-child::after {
+      display: none;
+    }
+    &.active {
+      color: #fff;
+      border-bottom: 3px solid #ffd600;
+      background: rgba(255, 214, 0, 0.1);
+    }
+    &:hover {
+      color: #fff;
+      background: rgba(255, 214, 0, 0.05);
+    }
+  }
+
+  &__carousel-wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 24px auto;
+    position: relative;
+  }
+
+  &__arrow {
+    background: #181818;
+    border: 2px solid #ffd600;
+    color: #ffd600;
+    width: 44px;
+    height: 44px;
+    font-size: 2rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    &.left {
+      left: -24px;
+    }
+    &.right {
+      right: -24px;
+    }
+    &:hover {
+      background: #ffd600;
+      color: #181818;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      line-height: 1;
+    }
+  }
+
+  &__carousel {
+    width: 100%;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+
+  &__slides {
+    display: flex;
+    gap: 24px;
+    min-width: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__slide {
+    background: #181818;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    border: 1.5px solid #ffd60044;
+    min-width: 220px;
+    max-width: 260px;
+    flex: 0 0 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 12px 12px 12px;
+    transition: box-shadow 0.3s;
+    img {
+      width: 100%;
+      height: 120px;
+      object-fit: contain;
+      margin-bottom: 12px;
+      background: #222;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #ffd60022;
+    }
+  }
+
+  &__caption {
+    color: #ffd600;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 4px;
+    text-shadow: 0 2px 8px #ffd60033;
+  }
+
+  &__all {
+    display: inline-block;
+    background: none;
+    border: 2px solid #ffd600;
+    color: #ffd600;
+    font-weight: 700;
+    padding: 0.8em 2em;
+    margin: 24px auto 0;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s, color 0.2s;
+    &:hover {
+      background: #ffd600;
+      color: #181818;
+    }
+  }
+}
 </style> 
