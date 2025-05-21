@@ -62,6 +62,7 @@ const services = [
   min-height: 100vh;
   background: #111;
   overflow: hidden;
+  margin-top: 40px;
 
   &__lamp {
     margin-bottom: 0;

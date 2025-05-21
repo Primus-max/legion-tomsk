@@ -28,12 +28,16 @@
         </button>
       </div>
     </div>
+    <ProgressBar />
   </header>
 </template>
 
 <script>
+import ProgressBar from './ProgressBar.vue';
+
 export default {
   name: 'Header',
+  components: { ProgressBar },
   data() {
     return {
       menuOpen: false,
@@ -62,10 +66,12 @@ export default {
 .header {
   background: var(--color-bg);
   box-shadow: 0 2px 8px rgba(24,24,24,0.08);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 100;
-  border-bottom: 2px solid var(--color-accent);
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  /* border-bottom: 2px solid var(--color-accent); */
   transition: background 0.3s, color 0.3s;
 }
 .header__container {
