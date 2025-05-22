@@ -145,7 +145,7 @@ function initials(name) {
   text-transform: uppercase;
 }
 .reviews-section__stack-wrap {
-  width: 100%;
+  width: 70%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -157,9 +157,9 @@ function initials(name) {
   left: 0;
   right: 0;
   margin: auto;
-  width: 440px;
-  min-height: 220px;
-  max-width: 95vw;
+  width: 520px;
+  min-height: 260px;
+  max-width: 98vw;
   background: radial-gradient(ellipse at 60% 0%, #232323 70%, #181818 100%);
   border-radius: 22px;
   box-shadow: 0 2px 32px #ffd60022, 0 0 0 2.5px #ffd60033, 0 0 32px 0 #ffd60011 inset;
@@ -167,10 +167,11 @@ function initials(name) {
   color: #fff;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 22px;
   justify-content: flex-start;
   align-items: stretch;
   opacity: 1;
+  padding: 40px 36px 36px 36px;
   transition: transform 0.5s cubic-bezier(.6,.2,.3,1.1), box-shadow 0.25s, opacity 0.3s;
   will-change: transform, opacity;
   &.swipe {
@@ -186,11 +187,12 @@ function initials(name) {
 .review-card__header {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 22px;
+  margin-bottom: 10px;
 }
 .review-card__avatar {
-  width: 54px;
-  height: 54px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   background: radial-gradient(circle at 60% 40%, #fff 60%, #ffd600 100%, #fff0 120%);
   box-shadow: 0 2px 18px #ffd60055, 0 0 0 4px #fff2;
@@ -198,7 +200,7 @@ function initials(name) {
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   color: #181818;
   overflow: hidden;
   border: 2.5px solid #ffd600cc;
@@ -212,27 +214,27 @@ function initials(name) {
 .review-card__info {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 .review-card__name {
   font-weight: 900;
-  font-size: 1.18rem;
+  font-size: 1.22rem;
   color: #ffd600;
   letter-spacing: 0.01em;
   margin-bottom: 2px;
 }
 .review-card__date {
-  font-size: 0.98rem;
+  font-size: 1.04rem;
   color: #fff7;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
 .review-card__text {
-  font-size: 1.09rem;
+  font-size: 1.13rem;
   color: #fff;
   font-weight: 500;
   line-height: 1.7;
-  margin-top: 2px;
+  margin-top: 6px;
   text-align: left;
   letter-spacing: 0.01em;
 }
@@ -253,7 +255,7 @@ function initials(name) {
   transform: translateY(-50%);
   z-index: 20;
   margin: 0;
-  left: -56px;
+  left: -32px;
   right: auto;
   border-radius: 0;
   box-shadow: none;
@@ -261,7 +263,7 @@ function initials(name) {
   transition: none;
   &.right {
     left: auto;
-    right: -56px;
+    right: -32px;
   }
   &:hover {
     color: #fff;
@@ -275,6 +277,23 @@ function initials(name) {
     height: 100%;
     width: 100%;
     line-height: 1;
+  }
+}
+@media (max-width: 700px) {
+  .review-card {
+    width: 98vw;
+    min-width: 0;
+    max-width: 100vw;
+    padding: 22px 6vw 18px 6vw;
+  }
+  .review-card__avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+  .reviews-section__arrow {
+    left: 2vw;
+    right: 2vw;
   }
 }
 </style> 
