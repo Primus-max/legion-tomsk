@@ -14,11 +14,11 @@
       >
         <div
           class="reviews-section__slides"
-          :style="{ transform: `translateX(-${currentSlide * (100 / slidesToShow)}%)` }"
+          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
         >
           <div
             v-for="(review, idx) in reviews"
-            :key="review.id"
+            :key="idx"
             class="reviews-section__slide"
           >
             <div class="review-card">
@@ -47,37 +47,31 @@
 <script setup>
 import {
   computed,
-  nextTick,
-  onBeforeUnmount,
   onMounted,
+  onUnmounted,
   ref,
-  watchEffect,
 } from 'vue';
 
 const reviews = [
   {
-    id: 1,
     name: 'Алексей К.',
     date: '12.04.2024',
     text: 'Очень доволен работой! Перетяжка руля — просто огонь, всё аккуратно и быстро. Спасибо за премиальный сервис!',
     avatar: '',
   },
   {
-    id: 2,
     name: 'Мария П.',
     date: '28.03.2024',
     text: 'Делала тюнинг салона — результат превзошёл ожидания. Цвета, материалы, всё на высшем уровне!',
     avatar: '',
   },
   {
-    id: 3,
     name: 'Игорь С.',
     date: '15.02.2024',
     text: 'Реставрация сидений — как новые! Очень приятная команда, всё объяснили и помогли выбрать материал.',
     avatar: '',
   },
   {
-    id: 4,
     name: 'Екатерина Л.',
     date: '02.01.2024',
     text: 'Пошив ковриков и вышивка — быстро, качественно, красиво. Рекомендую!',
@@ -85,11 +79,11 @@ const reviews = [
   },
 ];
 
-const slidesToShow = ref(3);
-const currentSlide = ref(0);
-const showArrows = computed(() => reviews.length > slidesToShow.value);
-const maxSlide = computed(() => reviews.length - slidesToShow.value);
 const carouselRef = ref(null);
+const currentSlide = ref(0);
+const slidesToShow = 3;
+const showArrows = computed(() => reviews.length > slidesToShow);
+const maxSlide = computed(() => reviews.length - slidesToShow);
 
 function nextSlide() {
   if (currentSlide.value < maxSlide.value) currentSlide.value++;
@@ -123,22 +117,8 @@ function initials(name) {
     .toUpperCase();
 }
 
-function updateSlidesToShow() {
-  if (window.innerWidth < 700) slidesToShow.value = 1;
-  else if (window.innerWidth < 1100) slidesToShow.value = 2;
-  else slidesToShow.value = 3;
-  if (currentSlide.value > reviews.length - slidesToShow.value) {
-    currentSlide.value = Math.max(0, reviews.length - slidesToShow.value);
-  }
-}
-
-onMounted(() => {
-  updateSlidesToShow();
-  window.addEventListener('resize', updateSlidesToShow);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', updateSlidesToShow);
-});
+onMounted(() => {});
+onUnmounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -182,16 +162,116 @@ onBeforeUnmount(() => {
   }
   &__slides {
     display: flex;
+    gap: 32px;
+    min-width: 100%;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 100%;
+    justify-content: center;
   }
   &__slide {
-    flex: 0 0 calc(100% / 3);
-    max-width: calc(100% / 3);
-    min-width: 0;
-    box-sizing: border-box;
-    padding: 0 16px;
+    min-width: 400px;
+    max-width: 480px;
+    flex: 0 0 440px;
+    height: 100%;
   }
+  &__slide:first-child .review-card {
+    border-left: none;
+  }
+  &__slide:last-child .review-card {
+    border-right: none;
+  }
+  &__caption {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 4px;
+    text-shadow: 0 2px 8px #ffd60033;
+    letter-spacing: 0.04em;
+  }
+}
+
+.reviews-section__arrow {
+  background: none;
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  margin: 0;
+  left: -40px;
+  right: auto;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  transition: none;
+  &.right {
+    left: auto;
+    right: -40px;
+  }
+  &:hover {
+    color: #fff;
+    background: none;
+    box-shadow: none;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .reviews-section__carousel {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    position: relative;
+  }
+  .reviews-section__slides {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    min-width: unset;
+    justify-content: flex-start;
+    padding: 0 8vw;
+    transition: none;
+    transform: none !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .reviews-section__slides::-webkit-scrollbar {
+    display: none;
+  }
+  .reviews-section__slide {
+    min-width: 80vw;
+    max-width: 80vw;
+    scroll-snap-align: center;
+    flex: 0 0 80vw;
+    margin: 0;
+    height: auto;
+  }
+  .reviews-section__arrow {
+    display: none !important;
+  }
+}
+
+.reviews-section__arrow:disabled {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .review-card {
@@ -206,7 +286,7 @@ onBeforeUnmount(() => {
   gap: 18px;
   position: relative;
   width: 100%;
-  min-height: 320px;
+  min-height: 220px;
   height: 100%;
   justify-content: flex-start;
   align-items: stretch;
@@ -219,15 +299,14 @@ onBeforeUnmount(() => {
     box-shadow: 0 6px 40px #ffd60066, 0 0 0 2.5px #ffd600cc, 0 0 32px 0 #ffd60033 inset;
     transform: scale(1.025) translateY(-4px);
   }
+  aspect-ratio: 1.7/1;
 }
-
 @keyframes review-fade-in {
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
-
 .review-card__header {
   display: flex;
   align-items: center;
@@ -280,86 +359,5 @@ onBeforeUnmount(() => {
   margin-top: 2px;
   text-align: left;
   letter-spacing: 0.01em;
-}
-
-.reviews-section__arrow {
-  background: none;
-  border: none;
-  color: #fff;
-  width: 32px;
-  height: 32px;
-  font-size: 1.4rem;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  margin: 0;
-  left: -40px;
-  right: auto;
-  border-radius: 0;
-  box-shadow: none;
-  outline: none;
-  transition: none;
-  &.right {
-    left: auto;
-    right: -40px;
-  }
-  &:hover {
-    color: #fff;
-    background: none;
-    box-shadow: none;
-  }
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    line-height: 1;
-  }
-}
-
-@media (max-width: 1100px) {
-  .reviews-section__slide {
-    flex: 0 0 50%;
-    max-width: 50%;
-    padding: 0 10px;
-  }
-}
-@media (max-width: 700px) {
-  .reviews-section__slide {
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding: 0 4vw;
-  }
-  .reviews-section__slides {
-    gap: 0;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    min-width: unset;
-    justify-content: flex-start;
-    padding: 0;
-    transition: none;
-    transform: none !important;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .reviews-section__slides::-webkit-scrollbar {
-    display: none;
-  }
-  .reviews-section__arrow {
-    display: none !important;
-  }
-}
-
-.reviews-section__arrow:disabled {
-  opacity: 0.3;
-  pointer-events: none;
 }
 </style> 
