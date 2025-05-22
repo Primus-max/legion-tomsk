@@ -201,7 +201,8 @@ function handleTouchEnd(e) {
     opacity: 0;
     pointer-events: none;
   }
-  &:hover {
+  &:hover,
+  &:first-child {
     box-shadow: 0 6px 40px #ffd60066, 0 0 0 2.5px #ffd600cc, 0 0 32px 0 #ffd60033 inset;
     transform: scale(1.025) translateY(-4px) rotate(var(--rotate, 0deg));
   }
