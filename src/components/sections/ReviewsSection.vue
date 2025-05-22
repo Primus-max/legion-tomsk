@@ -1,43 +1,31 @@
 <template>
   <section class="reviews-section">
     <h2 class="reviews-section__title">Отзывы клиентов</h2>
-    <div class="reviews-section__carousel-wrap">
-      <button class="reviews-section__arrow left" @click="prevSlide" v-if="showArrows">
-        <span>&lt;</span>
-      </button>
+    <div class="reviews-section__stack-wrap">
       <div
-        class="reviews-section__carousel"
-        ref="carouselRef"
-        @touchstart="onTouchStart"
-        @touchmove="onTouchMove"
-        @touchend="onTouchEnd"
+        v-for="(review, idx) in visibleReviews"
+        :key="review._id"
+        class="review-card"
+        :class="{ swipe: swiping && idx === 0 }"
+        :style="getCardStyle(idx)"
+        @transitionend="onCardTransitionEnd"
       >
-        <div
-          class="reviews-section__slides"
-          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-        >
-          <div
-            v-for="(review, idx) in reviews"
-            :key="idx"
-            class="reviews-section__slide"
-          >
-            <div class="review-card">
-              <div class="review-card__header">
-                <div class="review-card__avatar" :aria-label="review.name">
-                  <img v-if="review.avatar" :src="review.avatar" :alt="review.name" />
-                  <span v-else>{{ initials(review.name) }}</span>
-                </div>
-                <div class="review-card__info">
-                  <div class="review-card__name">{{ review.name }}</div>
-                  <div class="review-card__date">{{ review.date }}</div>
-                </div>
-              </div>
-              <div class="review-card__text">{{ review.text }}</div>
-            </div>
+        <div class="review-card__header">
+          <div class="review-card__avatar" :aria-label="review.name">
+            <img v-if="review.avatar" :src="review.avatar" :alt="review.name" />
+            <span v-else>{{ initials(review.name) }}</span>
+          </div>
+          <div class="review-card__info">
+            <div class="review-card__name">{{ review.name }}</div>
+            <div class="review-card__date">{{ review.date }}</div>
           </div>
         </div>
+        <div class="review-card__text">{{ review.text }}</div>
       </div>
-      <button class="reviews-section__arrow right" @click="nextSlide" v-if="showArrows">
+      <button class="reviews-section__arrow left" @click="swipeLeft">
+        <span>&lt;</span>
+      </button>
+      <button class="reviews-section__arrow right" @click="swipeRight">
         <span>&gt;</span>
       </button>
     </div>
@@ -47,12 +35,10 @@
 <script setup>
 import {
   computed,
-  onMounted,
-  onUnmounted,
   ref,
 } from 'vue';
 
-const reviews = [
+const baseReviews = [
   {
     name: 'Алексей К.',
     date: '12.04.2024',
@@ -79,36 +65,53 @@ const reviews = [
   },
 ];
 
-const carouselRef = ref(null);
-const currentSlide = ref(0);
-const slidesToShow = 3;
-const showArrows = computed(() => reviews.length > slidesToShow);
-const maxSlide = computed(() => reviews.length - slidesToShow);
+// Генерируем id и рандомный rotate для каждой карточки
+const reviews = ref(
+  baseReviews.map((r, i) => ({
+    ...r,
+    _id: i + '-' + Math.random().toString(36).slice(2, 7),
+    rotate: (Math.random() - 0.5) * 8 // от -4 до +4 градусов
+  }))
+);
+const topIndex = ref(0);
+const swiping = ref(false);
 
-function nextSlide() {
-  if (currentSlide.value < maxSlide.value) currentSlide.value++;
-}
-function prevSlide() {
-  if (currentSlide.value > 0) currentSlide.value--;
-}
-
-let touchStartX = 0;
-let touchEndX = 0;
-
-function onTouchStart(e) {
-  touchStartX = e.touches[0].clientX;
-}
-function onTouchMove(e) {
-  touchEndX = e.touches[0].clientX;
-}
-function onTouchEnd() {
-  const dx = touchEndX - touchStartX;
-  if (Math.abs(dx) > 40) {
-    if (dx < 0) nextSlide();
-    else prevSlide();
+const visibleReviews = computed(() => {
+  // Показываем 3 верхних карточки (верхняя — первая)
+  const arr = [];
+  for (let i = 0; i < 3; i++) {
+    arr.push(reviews.value[(topIndex.value + i) % reviews.value.length]);
   }
+  return arr;
+});
+
+function getCardStyle(idx) {
+  // idx=0 — верхняя, idx=1 — вторая, idx=2 — третья
+  const z = 10 - idx;
+  const scale = 1 - idx * 0.06;
+  const y = idx * 10;
+  const rotate = visibleReviews.value[idx]?.rotate || 0;
+  return {
+    zIndex: z,
+    transform: `translateY(${y}px) scale(${scale}) rotate(${rotate}deg)`
+  };
 }
 
+function swipeLeft() {
+  if (swiping.value) return;
+  swiping.value = true;
+}
+function swipeRight() {
+  if (swiping.value) return;
+  swiping.value = true;
+}
+function onCardTransitionEnd() {
+  if (!swiping.value) return;
+  // Перемещаем верхнюю карточку в конец
+  const first = reviews.value.shift();
+  reviews.value.push({ ...first, rotate: (Math.random() - 0.5) * 8 });
+  swiping.value = false;
+}
 function initials(name) {
   return name
     .split(' ')
@@ -116,9 +119,6 @@ function initials(name) {
     .join('')
     .toUpperCase();
 }
-
-onMounted(() => {});
-onUnmounted(() => {});
 </script>
 
 <style lang="scss" scoped>
@@ -130,181 +130,57 @@ onUnmounted(() => {});
   background: linear-gradient(120deg, #181818 80%, #232323 100%);
   border-radius: 32px;
   box-shadow: 0 8px 48px #000a, 0 0 0 2px #ffd60022;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  &__title {
-    font-size: clamp(2rem, 4vw, 2.7rem);
-    font-weight: 900;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 48px;
-    letter-spacing: 0.04em;
-    text-shadow: 0 4px 24px #ffd60088, 0 2px 8px #fff2;
-    text-transform: uppercase;
-  }
-  &__carousel-wrap {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    max-width: none;
-    margin: 0 auto 40px auto;
-    position: relative;
-    gap: 0;
-    min-height: 320px;
-  }
-  &__carousel {
-    width: 100%;
-    overflow: hidden;
-    touch-action: pan-y;
-    margin: 0 64px;
-  }
-  &__slides {
-    display: flex;
-    gap: 32px;
-    min-width: 100%;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    justify-content: center;
-  }
-  &__slide {
-    min-width: 400px;
-    max-width: 480px;
-    flex: 0 0 440px;
-    height: 100%;
-  }
-  &__slide:first-child .review-card {
-    border-left: none;
-  }
-  &__slide:last-child .review-card {
-    border-right: none;
-  }
-  &__caption {
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    text-align: center;
-    margin-top: 4px;
-    text-shadow: 0 2px 8px #ffd60033;
-    letter-spacing: 0.04em;
-  }
 }
-
-.reviews-section__arrow {
-  background: none;
-  border: none;
+.reviews-section__title {
+  font-size: clamp(2rem, 4vw, 2.7rem);
+  font-weight: 900;
   color: #fff;
-  width: 32px;
-  height: 32px;
-  font-size: 1.4rem;
-  font-weight: 400;
+  text-align: center;
+  margin-bottom: 48px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 4px 24px #ffd60088, 0 2px 8px #fff2;
+  text-transform: uppercase;
+}
+.reviews-section__stack-wrap {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  margin: 0;
-  left: -40px;
-  right: auto;
-  border-radius: 0;
-  box-shadow: none;
-  outline: none;
-  transition: none;
-  &.right {
-    left: auto;
-    right: -40px;
-  }
-  &:hover {
-    color: #fff;
-    background: none;
-    box-shadow: none;
-  }
-  span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    line-height: 1;
-  }
+  min-height: 340px;
+  position: relative;
 }
-
-@media (max-width: 900px) {
-  .reviews-section__carousel {
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    position: relative;
-  }
-  .reviews-section__slides {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    min-width: unset;
-    justify-content: flex-start;
-    padding: 0 8vw;
-    transition: none;
-    transform: none !important;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .reviews-section__slides::-webkit-scrollbar {
-    display: none;
-  }
-  .reviews-section__slide {
-    min-width: 80vw;
-    max-width: 80vw;
-    scroll-snap-align: center;
-    flex: 0 0 80vw;
-    margin: 0;
-    height: auto;
-  }
-  .reviews-section__arrow {
-    display: none !important;
-  }
-}
-
-.reviews-section__arrow:disabled {
-  opacity: 0.3;
-  pointer-events: none;
-}
-
 .review-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 440px;
+  min-height: 220px;
+  max-width: 95vw;
   background: radial-gradient(ellipse at 60% 0%, #232323 70%, #181818 100%);
   border-radius: 22px;
   box-shadow: 0 2px 32px #ffd60022, 0 0 0 2.5px #ffd60033, 0 0 32px 0 #ffd60011 inset;
   border: 1.5px solid #ffd60033;
-  padding: 32px 28px 28px 28px;
   color: #fff;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  position: relative;
-  width: 100%;
-  min-height: 220px;
-  height: 100%;
   justify-content: flex-start;
   align-items: stretch;
-  opacity: 0;
-  transform: translateY(40px) scale(0.97);
-  animation: review-fade-in 0.8s cubic-bezier(.6,.2,.3,1.1) forwards;
-  animation-delay: 0s;
-  transition: box-shadow 0.25s, transform 0.22s;
+  opacity: 1;
+  transition: transform 0.5s cubic-bezier(.6,.2,.3,1.1), box-shadow 0.25s, opacity 0.3s;
+  will-change: transform, opacity;
+  &.swipe {
+    transform: translateX(120%) rotate(12deg) scale(1.05) !important;
+    opacity: 0;
+    pointer-events: none;
+  }
   &:hover {
     box-shadow: 0 6px 40px #ffd60066, 0 0 0 2.5px #ffd600cc, 0 0 32px 0 #ffd60033 inset;
-    transform: scale(1.025) translateY(-4px);
-  }
-  aspect-ratio: 1.7/1;
-}
-@keyframes review-fade-in {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: scale(1.025) translateY(-4px) rotate(var(--rotate, 0deg));
   }
 }
 .review-card__header {
@@ -359,5 +235,46 @@ onUnmounted(() => {});
   margin-top: 2px;
   text-align: left;
   letter-spacing: 0.01em;
+}
+.reviews-section__arrow {
+  background: none;
+  border: none;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  margin: 0;
+  left: -56px;
+  right: auto;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  transition: none;
+  &.right {
+    left: auto;
+    right: -56px;
+  }
+  &:hover {
+    color: #fff;
+    background: none;
+    box-shadow: none;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    line-height: 1;
+  }
 }
 </style> 
