@@ -10,7 +10,6 @@
           <li><router-link to="/services">Услуги</router-link></li>
           <li><router-link to="/portfolio">Портфолио</router-link></li>
           <li><router-link to="/prices">Прайс</router-link></li>
-          <li><router-link to="/reviews">Отзывы</router-link></li>
           <li><router-link to="/contacts">Контакты</router-link></li>
         </ul>
       </nav>
