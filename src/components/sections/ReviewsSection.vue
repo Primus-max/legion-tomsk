@@ -1,7 +1,11 @@
 <template>
   <section class="reviews-section">
     <h2 class="reviews-section__title">Отзывы клиентов</h2>
-    <div class="reviews-section__stack-wrap">
+    <div
+      class="reviews-section__stack-wrap"
+      @touchstart="handleTouchStart"
+      @touchend="handleTouchEnd"
+    >
       <div
         v-for="(review, idx) in visibleReviews"
         :key="review._id"
@@ -88,9 +92,11 @@ const visibleReviews = computed(() => {
 function getCardStyle(idx) {
   // idx=0 — верхняя, idx=1 — вторая, idx=2 — третья
   const z = 10 - idx;
-  const scale = 1 - idx * 0.06;
-  const y = idx * 10;
-  const rotate = visibleReviews.value[idx]?.rotate || 0;
+  // На мобильных чуть меньше scale и rotate
+  const isMobile = window.matchMedia('(max-width: 700px)').matches;
+  const scale = isMobile ? 1 - idx * 0.04 : 1 - idx * 0.06;
+  const y = idx * (isMobile ? 6 : 10);
+  const rotate = isMobile ? (visibleReviews.value[idx]?.rotate || 0) * 0.7 : visibleReviews.value[idx]?.rotate || 0;
   return {
     zIndex: z,
     transform: `translateY(${y}px) scale(${scale}) rotate(${rotate}deg)`
@@ -119,6 +125,21 @@ function initials(name) {
     .join('')
     .toUpperCase();
 }
+
+// Touch-свайп для мобильных
+let touchStartX = 0;
+let touchEndX = 0;
+function handleTouchStart(e) {
+  touchStartX = e.changedTouches[0].screenX;
+}
+function handleTouchEnd(e) {
+  touchEndX = e.changedTouches[0].screenX;
+  const dx = touchEndX - touchStartX;
+  if (Math.abs(dx) > 40) {
+    if (dx < 0) swipeLeft();
+    else swipeRight();
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -145,11 +166,12 @@ function initials(name) {
   text-transform: uppercase;
 }
 .reviews-section__stack-wrap {
-  width: 70%;
+  width: 100vw;
+  min-height: 240px;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 340px;
   position: relative;
 }
 .review-card {
@@ -280,20 +302,21 @@ function initials(name) {
   }
 }
 @media (max-width: 700px) {
+  .reviews-section__arrow {
+    display: none;
+  }
   .review-card {
-    width: 98vw;
+    width: 96vw;
     min-width: 0;
-    max-width: 100vw;
-    padding: 22px 6vw 18px 6vw;
+    max-width: 99vw;
+    min-height: 140px;
+    padding: 14px 4vw 14px 4vw;
+    box-shadow: 0 2px 10px #ffd60022, 0 0 0 1px #ffd60033, 0 0 8px 0 #ffd60011 inset;
   }
   .review-card__avatar {
     width: 44px;
     height: 44px;
     font-size: 1.1rem;
-  }
-  .reviews-section__arrow {
-    left: 2vw;
-    right: 2vw;
   }
 }
 </style> 
