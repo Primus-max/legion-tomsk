@@ -277,15 +277,14 @@ function handleTouchEnd(e) {
   transform: translateY(-50%);
   z-index: 20;
   margin: 0;
-  left: -32px;
+  left: 292px;
   right: auto;
   border-radius: 0;
   box-shadow: none;
   outline: none;
   transition: none;
   &.right {
-    left: auto;
-    right: -32px;
+    left: 940px;    
   }
   &:hover {
     color: #fff;
@@ -306,11 +305,11 @@ function handleTouchEnd(e) {
     display: none;
   }
   .review-card {
-    width: 96vw;
+    width: 90vw;
     min-width: 0;
-    max-width: 99vw;
+    max-width: 90vw;
     min-height: 140px;
-    padding: 14px 4vw 14px 4vw;
+    padding: 14px 3vw 14px 3vw;
     box-shadow: 0 2px 10px #ffd60022, 0 0 0 1px #ffd60033, 0 0 8px 0 #ffd60011 inset;
   }
   .review-card__avatar {
