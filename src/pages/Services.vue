@@ -7,10 +7,11 @@
         <p class="service-block__lead">Премиальная перетяжка салона автомобиля с гарантией качества и индивидуальным подходом.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/seats.svg" alt="Перетяжка салона" />
-          <img src="/images/seats.svg" alt="Перетяжка салона" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Перетяжка+1', alt: 'Перетяжка 1', caption: 'Перетяжка сидений' },
+          { src: 'https://placehold.co/300x200?text=Перетяжка+2', alt: 'Перетяжка 2', caption: 'Перетяжка руля' },
+          { src: 'https://placehold.co/300x200?text=Перетяжка+3', alt: 'Перетяжка 3', caption: 'Перетяжка потолка' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Используем только лучшие материалы: натуральная кожа, алькантара, экокожа. Перетяжка салона — это не только обновление внешнего вида, но и повышение комфорта, статуса и стоимости вашего авто.
@@ -41,10 +42,11 @@
         <p class="service-block__lead">Уникальный тюнинг салона с использованием современных материалов и технологий.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/tuning.svg" alt="Тюнинг салона" />
-          <img src="/images/tuning.svg" alt="Тюнинг салона" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Тюнинг+1', alt: 'Тюнинг 1', caption: 'Декоративные вставки' },
+          { src: 'https://placehold.co/300x200?text=Тюнинг+2', alt: 'Тюнинг 2', caption: 'Подсветка салона' },
+          { src: 'https://placehold.co/300x200?text=Тюнинг+3', alt: 'Тюнинг 3', caption: 'Эксклюзивные материалы' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Мы предлагаем индивидуальные решения по тюнингу салона: эксклюзивные вставки, подсветка, нестандартные материалы, интеграция современных технологий. Ваш салон станет уникальным и подчеркнёт ваш стиль.
@@ -75,10 +77,11 @@
         <p class="service-block__lead">Восстановление и реставрация элементов салона до состояния нового.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/restoration.svg" alt="Реставрация салона" />
-          <img src="/images/restoration.svg" alt="Реставрация салона" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Реставрация+1', alt: 'Реставрация 1', caption: 'Восстановление кожи' },
+          { src: 'https://placehold.co/300x200?text=Реставрация+2', alt: 'Реставрация 2', caption: 'Ремонт пластика' },
+          { src: 'https://placehold.co/300x200?text=Реставрация+3', alt: 'Реставрация 3', caption: 'Обновление цвета' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Реставрация — это комплекс работ по восстановлению внешнего вида и функциональности салона. Мы устраняем потертости, царапины, восстанавливаем форму и цвет, возвращаем салону первозданный вид.
@@ -109,10 +112,11 @@
         <p class="service-block__lead">Индивидуальный пошив элементов интерьера по вашим размерам и пожеланиям.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/sewing.svg" alt="Изготовление и пошив" />
-          <img src="/images/sewing.svg" alt="Изготовление и пошив" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Пошив+1', alt: 'Пошив 1', caption: 'Чехлы на сиденья' },
+          { src: 'https://placehold.co/300x200?text=Пошив+2', alt: 'Пошив 2', caption: 'Пошив подлокотников' },
+          { src: 'https://placehold.co/300x200?text=Пошив+3', alt: 'Пошив 3', caption: 'Пошив ковров' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Мы создаём уникальные элементы интерьера: чехлы, подлокотники, панели, ковры и многое другое. Всё — по индивидуальным меркам, с учётом ваших пожеланий и стиля автомобиля.
@@ -143,10 +147,11 @@
         <p class="service-block__lead">Нанесение вышивки любой сложности на элементы салона.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/embroidery.svg" alt="Вышивка" />
-          <img src="/images/embroidery.svg" alt="Вышивка" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Вышивка+1', alt: 'Вышивка 1', caption: 'Логотипы' },
+          { src: 'https://placehold.co/300x200?text=Вышивка+2', alt: 'Вышивка 2', caption: 'Узоры' },
+          { src: 'https://placehold.co/300x200?text=Вышивка+3', alt: 'Вышивка 3', caption: 'Индивидуальный дизайн' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Вышивка логотипов, надписей, узоров и индивидуальных дизайнов на сиденьях, подголовниках, коврах и других деталях интерьера. Современное оборудование и качественные нитки.
@@ -177,10 +182,11 @@
         <p class="service-block__lead">Установка и настройка электрооборудования в салоне автомобиля.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/electronics.svg" alt="Автоэлектрика" />
-          <img src="/images/electronics.svg" alt="Автоэлектрика" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Электрика+1', alt: 'Электрика 1', caption: 'Подсветка' },
+          { src: 'https://placehold.co/300x200?text=Электрика+2', alt: 'Электрика 2', caption: 'Мультимедиа' },
+          { src: 'https://placehold.co/300x200?text=Электрика+3', alt: 'Электрика 3', caption: 'Парктроники' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Устанавливаем и настраиваем любое электрооборудование: подсветка, мультимедиа, зарядки, сигнализации, парктроники и многое другое. Гарантия на все работы.
@@ -211,10 +217,11 @@
         <p class="service-block__lead">Изготовление современных ковров с высоким бортом и органайзеров для салона.</p>
       </div>
       <div class="service-block__content">
-        <div class="service-block__gallery">
-          <img src="/images/carpets.svg" alt="EVO и 3D ковры" />
-          <img src="/images/carpets.svg" alt="EVO и 3D ковры" />
-        </div>
+        <ServiceGallery :images="[
+          { src: 'https://placehold.co/300x200?text=Ковры+1', alt: 'Ковры 1', caption: 'EVO ковры' },
+          { src: 'https://placehold.co/300x200?text=Ковры+2', alt: 'Ковры 2', caption: '3D ковры' },
+          { src: 'https://placehold.co/300x200?text=Ковры+3', alt: 'Ковры 3', caption: 'Органайзеры' }
+        ]" />
         <div class="service-block__desc">
           <p>
             Изготавливаем EVO и 3D ковры по индивидуальным размерам, а также органайзеры для багажника и салона. Защита, стиль и удобство для вашего автомобиля.
@@ -241,7 +248,7 @@
 </template>
 
 <script setup>
-// Здесь можно добавить логику для модальных окон, слайдеров и т.д.
+import ServiceGallery from '../components/ServiceGallery.vue';
 </script>
 
 <style scoped>
