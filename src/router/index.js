@@ -13,7 +13,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/legion-tomsk/'),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (to.hash) {
