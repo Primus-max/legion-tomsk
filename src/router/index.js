@@ -10,6 +10,7 @@ const routes = [
   { path: '/prices', name: 'Prices', component: () => import('../pages/Prices.vue') },  
   { path: '/contacts', name: 'Contacts', component: () => import('../pages/Contacts.vue') },
   { path: '/about', name: 'About', component: () => import('../pages/About.vue') },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../pages/NotFound.vue') }
 ]
 
 const router = createRouter({
