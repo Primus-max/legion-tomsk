@@ -2,15 +2,16 @@
   <div class="service-gallery">
     <button class="gallery-arrow gallery-arrow--up" @click="prev" :disabled="currentIndex === 0">▲</button>
     <div class="gallery-image-wrapper">
-      <img :src="images[currentIndex].src" :alt="images[currentIndex].alt" class="gallery-image" />
-      <div class="gallery-caption">{{ images[currentIndex].caption }}</div>
+      <img :src="images[currentIndex].src" :alt="images[currentIndex].alt" class="gallery-image" @click="openModal" style="cursor:pointer" />
     </div>
     <button class="gallery-arrow gallery-arrow--down" @click="next" :disabled="currentIndex === images.length - 1">▼</button>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
+
+const emit = defineEmits(['open-modal']);
 
 const props = defineProps({
   images: {
@@ -30,6 +31,9 @@ function prev() {
 }
 function next() {
   if (currentIndex.value < props.images.length - 1) currentIndex.value++;
+}
+function openModal() {
+  emit('open-modal', currentIndex.value);
 }
 </script>
 
@@ -60,13 +64,10 @@ function next() {
   background: #222;
   object-fit: cover;
   border: 2px solid #ffd600;
+  transition: box-shadow 0.2s;
 }
-.gallery-caption {
-  margin-top: 0.5em;
-  color: #ffd600;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
+.gallery-image:hover {
+  box-shadow: 0 0 0 3px #ffd60099;
 }
 .gallery-arrow {
   background: #232323;
