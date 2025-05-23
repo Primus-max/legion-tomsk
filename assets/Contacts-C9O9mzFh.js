@@ -1,0 +1,1 @@
+import{_ as n,c as o,e as t,o as s}from"./index-C2oSFBaY.js";const a={name:"Contacts"};function r(c,e,l,p,u,_){return s(),o("main",null,e[0]||(e[0]=[t("h1",null,"Контакты",-1),t("p",null,"Свяжитесь с нами для консультации или записи.",-1)]))}const m=n(a,[["render",r]]);export{m as default};
