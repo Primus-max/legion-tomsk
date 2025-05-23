@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="225" fill="#181818"/>
+  <!-- Схема -->
+  <path d="M150 90 h40 l20 20 l20 -40 l20 40 l20 -20 h40" stroke="#FFD600" stroke-width="2" fill="none"/>
+  <!-- Молния -->
+  <path d="M200 70 L190 110 H210 L200 150" stroke="#FFD600" stroke-width="3" fill="none"/>
+  <text x="200" y="200" font-family="Arial" font-size="16" fill="#FFD600" text-anchor="middle">Автоэлектрика</text>
+</svg> 

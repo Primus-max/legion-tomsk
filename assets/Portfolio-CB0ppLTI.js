@@ -1,0 +1,1 @@
+import{_ as t,c as n,e,o as r}from"./index-B8wEpPrf.js";const s={name:"Portfolio"};function a(l,o,c,p,f,i){return r(),n("main",null,o[0]||(o[0]=[e("h1",null,"Портфолио",-1),e("p",null,"Здесь будут примеры наших работ.",-1)]))}const _=t(s,[["render",a]]);export{_ as default};

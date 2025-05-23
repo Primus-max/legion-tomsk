@@ -1,0 +1,1 @@
+import{_ as t,c as n,e as o,o as s}from"./index-B8wEpPrf.js";const a={name:"About"};function r(c,e,l,p,u,_){return s(),n("main",null,e[0]||(e[0]=[o("h1",null,"О компании",-1),o("p",null,"Информация о нашей компании и команде.",-1)]))}const m=t(a,[["render",r]]);export{m as default};

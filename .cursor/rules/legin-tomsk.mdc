@@ -1,0 +1,63 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Guidelines
+1. General Principles
+Follow DRY: Don’t repeat yourself. Reuse logic and components.
+Keep it simple: Avoid unnecessary abstractions and entities.
+Write clean, readable code: Code should be self-explanatory where possible.
+MobileFirst principal. SEO optimization and a11y.
+2. Tech Stack & Tools
+Vue 3 (Composition API, <script setup>)
+Pinia / PiniaColada for state management
+Vue Router for routing
+VueUse for utility composables
+Jest + Vue Test Utils for testing
+3. Code Structure & Style
+Use the official Vue 3 Style Guide.
+Prefer <script setup> for new components.
+Use Composition API for logic reuse and organization.
+Keep components focused; split large ones as needed.
+Group files by feature/domain (not by type).
+4. State Management
+Use Pinia/PiniaColada for global/shared state.
+Keep local state in components unless sharing is needed.
+Avoid overusing global state.
+5. API & Async Logic
+Encapsulate API calls in composables or services.
+Follow best practices for API patterns (e.g., separation of concerns, error handling, loading states).
+Use async/await and handle errors gracefully.
+Never call APIs directly in templates or lifecycle hooks—always use a composable/service.
+6. Routing
+Use Vue Router for navigation.
+Organize routes by feature.
+Lazy-load route components where possible.
+7. Utilities & Composables
+Use VueUse for common utilities.
+Create custom composables for reusable logic.
+Store composables in /composables.
+8. Naming Conventions
+PascalCase for components/files: UserProfile.vue
+camelCase for variables, functions, composables
+SCREAMING_SNAKE_CASE for constants
+9. Styling
+Scoped styles in components
+CSS variables or SCSS for theming
+No inline styles unless necessary
+10. Testing
+Unit test critical logic/components
+Test before refactoring
+Use Jest + Vue Test Utils
+11. Documentation & Comments
+Document complex logic
+Keep README up to date
+Avoid redundant comments
+12. Git & Collaboration
+Use feature branches
+Write clear commit messages in English
+Code review before merging
+Summary:
+
+Keep the codebase clean, maintainable, and simple. Use modern Vue 3 patterns, proper state management, and best practices for API and routing. Reuse logic and components, and avoid unnecessary complexity.

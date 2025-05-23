@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400" height="225" viewBox="0 0 400 225" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="seatGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#222;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="225" fill="#181818"/>
+  <!-- Сиденье -->
+  <path d="M100 50 h200 v125 h-200z" fill="url(#seatGrad)" stroke="#FFD600" stroke-width="2"/>
+  <!-- Строчка -->
+  <path d="M120 70 h160 M120 100 h160 M120 130 h160" stroke="#FFD600" stroke-width="1" fill="none" opacity="0.6"/>
+  <text x="200" y="200" font-family="Arial" font-size="16" fill="#FFD600" text-anchor="middle">Перетяжка сидений</text>
+</svg> 
