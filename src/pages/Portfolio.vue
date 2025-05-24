@@ -27,40 +27,7 @@
           {{ cat.title }}
         </h2>
         <p class="portfolio-category__desc">{{ cat.desc }}</p>
-        <div v-if="works[cat.id] && works[cat.id].length" class="carousel-row">
-          <button
-            class="carousel-arrow left"
-            :class="{ disabled: carouselIndexes[cat.id] === 0 }"
-            @click="prevSlide(cat.id)"
-            aria-label="Назад"
-          >
-            ‹
-          </button>
-          <div class="portfolio-carousel">
-            <div
-              v-for="(work, idx) in works[cat.id]"
-              :key="work.id"
-              class="portfolio-gallery__item"
-              v-show="isVisibleInCarousel(cat.id, idx)"
-            >
-              <div class="portfolio-gallery__img-wrap">
-                <img :src="work.image" :alt="cat.title + ' работа ' + (idx+1)" class="portfolio-gallery__img" loading="lazy" />
-              </div>
-              <button class="portfolio-gallery__cta" aria-label="Рассчитать">Рассчитать</button>
-            </div>
-          </div>
-          <button
-            class="carousel-arrow right"
-            :class="{ disabled: carouselIndexes[cat.id] >= works[cat.id].length - visibleSlides }"
-            @click="nextSlide(cat.id)"
-            aria-label="Вперёд"
-          >
-            ›
-          </button>
-        </div>
-        <div v-else class="portfolio-gallery__empty">
-          В этой категории скоро появятся работы!
-        </div>
+        <PortfolioGallery :works="works[cat.id]" />
       </section>
     </div>
     <FooterSection />
@@ -74,12 +41,9 @@ export default {
 </script>
 
 <script setup>
-import {
-  computed,
-  onMounted,
-  ref,
-} from 'vue';
+import { ref } from 'vue';
 
+import PortfolioGallery from '../components/PortfolioGallery.vue';
 import FooterSection from '../components/sections/FooterSection.vue';
 
 const categories = [
@@ -133,29 +97,6 @@ const works = {
 };
 
 const activeCategory = ref(categories[0].id);
-const carouselIndexes = ref({});
-const visibleSlides = ref(3);
-const showArrows = ref(true);
-
-function updateVisibleSlides() {
-  if (window.innerWidth < 700) {
-    visibleSlides.value = 1;
-    showArrows.value = false;
-  } else if (window.innerWidth < 1100) {
-    visibleSlides.value = 2;
-    showArrows.value = true;
-  } else {
-    visibleSlides.value = 3;
-    showArrows.value = true;
-  }
-}
-onMounted(() => {
-  updateVisibleSlides();
-  window.addEventListener('resize', updateVisibleSlides);
-  categories.forEach(cat => {
-    if (!(cat.id in carouselIndexes.value)) carouselIndexes.value[cat.id] = 0;
-  });
-});
 
 function scrollToCategory(id) {
   activeCategory.value = id;
@@ -163,16 +104,6 @@ function scrollToCategory(id) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-}
-function prevSlide(catId) {
-  if (carouselIndexes.value[catId] > 0) carouselIndexes.value[catId]--;
-}
-function nextSlide(catId) {
-  if (carouselIndexes.value[catId] < works[catId].length - visibleSlides.value) carouselIndexes.value[catId]++;
-}
-function isVisibleInCarousel(catId, idx) {
-  const start = carouselIndexes.value[catId];
-  return idx >= start && idx < start + visibleSlides.value;
 }
 </script>
 
@@ -257,119 +188,6 @@ function isVisibleInCarousel(catId, idx) {
   color: #fff;
   margin-bottom: 1.5em;
   font-size: 1.1rem;
-}
-.carousel-row {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-.portfolio-carousel {
-  display: flex;
-  gap: 2rem;
-  flex: 1 1 0;
-  overflow: visible;
-}
-.carousel-arrow {
-  flex: 0 0 36px;
-  background: transparent;
-  color: #ffd600;
-  border: none;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  font-size: 1.7rem;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
-  transition: background 0.2s, color 0.2s, opacity 0.2s, filter 0.2s;
-  pointer-events: auto;
-  outline: none;
-}
-.carousel-arrow:hover {
-  color: #fff700;
-  filter: drop-shadow(0 0 6px #ffd600);
-  opacity: 1;
-}
-.carousel-arrow.disabled {
-  opacity: 0;
-  pointer-events: none;
-}
-.portfolio-gallery__item {
-  background: #181818;
-  border-radius: 18px;
-  box-shadow: 0 4px 32px #ffd60022;
-  padding: 1.2rem 1rem 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 320px;
-  max-width: 400px;
-  transition: box-shadow 0.2s, transform 0.2s;
-  animation: fadeInUp 0.7s;
-}
-.portfolio-gallery__item:hover {
-  box-shadow: 0 8px 48px #ffd60055;
-  transform: translateY(-6px) scale(1.03);
-}
-.portfolio-gallery__img-wrap {
-  width: 100%;
-  aspect-ratio: 4/3;
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  background: #232323;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.portfolio-gallery__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s;
-}
-.portfolio-gallery__item:hover .portfolio-gallery__img {
-  transform: scale(1.07);
-}
-.portfolio-gallery__cta {
-  margin-top: 0.7em;
-  background: linear-gradient(90deg, #ffd600 60%, #fff700 100%);
-  color: #181818;
-  font-weight: 900;
-  font-size: 1.13rem;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 32px;
-  box-shadow: 0 2px 18px #ffd60055, 0 0 0 2px #ffd600cc;
-  cursor: pointer;
-  transition: box-shadow 0.2s, background 0.2s;
-}
-.portfolio-gallery__cta:hover {
-  box-shadow: 0 4px 32px #ffd60099, 0 0 0 2.5px #ffd600cc;
-  background: linear-gradient(90deg, #fff700 80%, #ffd600 100%);
-}
-.portfolio-gallery__empty {
-  color: #ffd60099;
-  font-size: 1.2rem;
-  text-align: center;
-  padding: 2.5em 0;
-}
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 @media (max-width: 1100px) {
   .portfolio-gallery__item {
