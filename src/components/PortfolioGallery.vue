@@ -35,7 +35,7 @@
         ›
       </button>
     </div>
-    <button v-if="works.length" class="portfolio-gallery__cta-main" @click="openModal(currentIndex)">Рассчитать</button>
+    <button v-if="works.length" class="portfolio-gallery__cta-main" @click="openOrderModal">Заказать</button>
     <ImageModalSlider
       v-if="modalVisible"
       :images="modalImages"
@@ -43,6 +43,7 @@
       :visible="modalVisible"
       @close="modalVisible = false"
     />
+    <OrderModal v-if="orderModalVisible" @close="closeOrderModal" />
   </div>
 </template>
 
@@ -55,6 +56,7 @@ import {
 } from 'vue';
 
 import ImageModalSlider from './ImageModalSlider.vue';
+import OrderModal from './OrderModal.vue';
 
 const props = defineProps({
   works: { type: Array, required: true },
@@ -65,6 +67,7 @@ const visibleSlides = ref(3);
 const currentIndex = ref(0);
 const modalVisible = ref(false);
 const modalIndex = ref(0);
+const orderModalVisible = ref(false);
 
 function updateVisibleSlides() {
   if (window.innerWidth < 700) visibleSlides.value = 1;
@@ -91,6 +94,13 @@ function openModal(idx) {
 }
 const modalImages = computed(() => props.works.map((w, i) => ({ src: w.image, alt: `Фото ${i+1}` })));
 watch(() => props.works, () => { currentIndex.value = 0; });
+
+const openOrderModal = () => {
+  orderModalVisible.value = true;
+};
+const closeOrderModal = () => {
+  orderModalVisible.value = false;
+};
 </script>
 
 <style scoped>
