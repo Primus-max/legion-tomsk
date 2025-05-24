@@ -222,13 +222,16 @@
       :visible="modalVisible"
       @close="modalVisible = false"
     />
+    <FooterSection />
   </main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import ServiceGallery from '../components/ServiceGallery.vue';
+
 import ImageModalSlider from '../components/ImageModalSlider.vue';
+import FooterSection from '../components/sections/FooterSection.vue';
+import ServiceGallery from '../components/ServiceGallery.vue';
 
 const peretyazhkaImages = [
   { src: 'https://placehold.co/300x200?text=Перетяжка+1', alt: 'Перетяжка 1' },
