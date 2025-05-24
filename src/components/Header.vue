@@ -4,14 +4,6 @@
       <div class="header__logo desktop-only">
         <span>Legion</span>
       </div>
-      <div class="header__contacts">
-        <button class="header__cta mobile-wide">Получить расчет</button>
-      </div>
-      <button class="header__burger" v-if="!menuOpen" @click="menuOpen = !menuOpen" :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'">
-        <span :class="{ 'open': menuOpen }"></span>
-        <span :class="{ 'open': menuOpen }"></span>
-        <span :class="{ 'open': menuOpen }"></span>
-      </button>
       <nav class="header__nav" :class="{ 'is-open': menuOpen }">
         <button class="header__close mobile-only" @click="menuOpen = false" aria-label="Закрыть меню">&times;</button>
         <ul>
@@ -25,6 +17,15 @@
           <a href="tel:+78120000000" class="header__phone">+7 (812) 000-00-00</a>
         </div>
       </nav>
+      <div class="header__contacts">
+        <a href="tel:+78120000000" class="header__phone desktop-only">+7 (812) 000-00-00</a>
+        <button class="header__cta mobile-wide">Получить расчет</button>
+        <button class="header__burger" v-if="!menuOpen" @click="menuOpen = !menuOpen" :aria-label="menuOpen ? 'Закрыть меню' : 'Открыть меню'">
+          <span :class="{ 'open': menuOpen }"></span>
+          <span :class="{ 'open': menuOpen }"></span>
+          <span :class="{ 'open': menuOpen }"></span>
+        </button>
+      </div>
     </div>
     <ProgressBar />
   </header>
@@ -61,9 +62,9 @@ export default {
   transition: background 0.3s, color 0.3s;
 }
 .header__container {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: flex-start;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.5rem 1rem;
@@ -81,6 +82,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 1rem;
+  justify-content: flex-end;
 }
 .header__cta {
   background: var(--color-accent);
@@ -132,15 +134,10 @@ export default {
   transform: translateY(-8px) rotate(-45deg);
 }
 .header__nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  background: var(--color-bg);
-  box-shadow: 0 2px 8px rgba(24,24,24,0.10);
-  transform: translateY(-200%);
-  transition: transform 0.3s;
-  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 .header__nav.is-open {
   transform: translateY(0);
@@ -215,6 +212,8 @@ export default {
 }
 @media (max-width: 700px) {
   .header__container {
+    display: flex;
+    justify-content: flex-start;
     padding: 0.25rem 0.5rem;
     min-height: 48px;
   }
@@ -246,6 +245,22 @@ export default {
   }
   .header__burger {
     display: flex;
+  }
+  .header__nav {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: var(--color-bg);
+    box-shadow: 0 2px 8px rgba(24,24,24,0.10);
+    transform: translateY(-200%);
+    transition: transform 0.3s;
+    z-index: 1050;
+    height: auto;
+  }
+  .header__nav.is-open {
+    transform: translateY(0);
   }
   .header__nav ul {
     flex-direction: column;
