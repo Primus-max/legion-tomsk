@@ -6,6 +6,12 @@
       <form class="order-modal__form" @submit.prevent="submit">
         <div class="order-modal__fields">
           <label>
+            <span v-if="form.service || form.category" class="order-modal__service-label">
+              <span v-if="form.category">{{ form.category }}:</span>
+              <span v-if="form.service">{{ form.service }}</span>
+            </span>
+          </label>
+          <label>
             Марка авто*
             <input v-model="form.brand" required placeholder="Например, Toyota" />
           </label>
@@ -60,9 +66,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {
+  defineProps,
+  ref,
+  watch,
+} from 'vue';
 
 const emit = defineEmits(['close']);
+
+const props = defineProps({
+  defaultService: { type: String, default: '' },
+  defaultCategory: { type: String, default: '' },
+});
 
 const form = ref({
   brand: '',
@@ -75,7 +90,18 @@ const form = ref({
   name: '',
   phone: '',
   email: '',
+  service: '',
+  category: '',
 });
+
+watch(
+  () => [props.defaultService, props.defaultCategory],
+  ([service, category]) => {
+    form.value.service = service || '';
+    form.value.category = category || '';
+  },
+  { immediate: true }
+);
 
 const workTypes = [
   'Сиденья',
@@ -134,16 +160,18 @@ async function submit() {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: none;
-  border: none;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
   font-size: 2rem;
-  color: #ffd600;
+  color: #fff;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-.order-modal__close:hover {
   opacity: 1;
+  transition: none;
+  z-index: 10;
 }
 .order-modal__title {
   margin-bottom: 1.2rem;
@@ -208,6 +236,13 @@ async function submit() {
   text-align: center;
   margin-top: 1em;
   font-weight: 700;
+}
+.order-modal__service-label {
+  display: block;
+  font-size: 1.08em;
+  font-weight: 700;
+  color: #ffd600;
+  margin-bottom: 0.5em;
 }
 @media (max-width: 700px) {
   .order-modal {

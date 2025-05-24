@@ -31,17 +31,39 @@
               <div v-if="item.desc" class="service-desc">{{ item.desc }}</div>
             </td>
             <td class="price-cell">{{ item.price }}</td>
-            <td><button class="order-btn" @click="order(item.title, cat.label)">Заказать</button></td>
+            <td><button class="order-btn" @click="openOrderModal(item.title, cat.label)">Заказать</button></td>
           </tr>
         </tbody>
       </table>
     </section>
+    <OrderModal
+      v-if="orderModalVisible"
+      :defaultService="orderModalService"
+      :defaultCategory="orderModalCategory"
+      @close="closeOrderModal"
+    />
     <FooterSection />
   </main>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+import OrderModal from '../components/OrderModal.vue';
 import FooterSection from '../components/sections/FooterSection.vue';
+
+const orderModalVisible = ref(false);
+const orderModalService = ref('');
+const orderModalCategory = ref('');
+
+function openOrderModal(service, category) {
+  orderModalService.value = service;
+  orderModalCategory.value = category;
+  orderModalVisible.value = true;
+}
+function closeOrderModal() {
+  orderModalVisible.value = false;
+}
 
 const categories = [
   {
@@ -122,11 +144,6 @@ const categories = [
     ],
   },
 ];
-
-function order(service, category) {
-  // TODO: открыть модалку заказа с автозаполнением
-  alert(`Заказ услуги: ${service} (${category})`);
-}
 </script>
 
 <style scoped>
