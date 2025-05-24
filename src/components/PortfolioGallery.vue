@@ -9,7 +9,12 @@
       >
         ‹
       </button>
-      <div class="portfolio-carousel">
+      <div
+        class="portfolio-carousel"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+      >
         <div
           v-for="(work, idx) in works"
           :key="work.id"
@@ -35,6 +40,14 @@
         ›
       </button>
     </div>
+    <div v-if="visibleSlides === 1 && works.length > 1" class="carousel-dots">
+      <span
+        v-for="(work, idx) in works"
+        :key="'dot-' + idx"
+        class="carousel-dot"
+        :class="{ active: idx === currentIndex }"
+      ></span>
+    </div>
     <button v-if="works.length" class="portfolio-gallery__cta-main" @click="openOrderModal">Заказать</button>
     <ImageModalSlider
       v-if="modalVisible"
@@ -50,6 +63,7 @@
 <script setup>
 import {
   computed,
+  onBeforeUnmount,
   onMounted,
   ref,
   watch,
@@ -78,6 +92,9 @@ onMounted(() => {
   updateVisibleSlides();
   window.addEventListener('resize', updateVisibleSlides);
 });
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateVisibleSlides);
+});
 
 function isVisible(idx) {
   return idx >= currentIndex.value && idx < currentIndex.value + visibleSlides.value;
@@ -101,6 +118,30 @@ const openOrderModal = () => {
 const closeOrderModal = () => {
   orderModalVisible.value = false;
 };
+
+// --- SWIPE для мобильного ---
+const isMobile = () => window.innerWidth < 700;
+const touchStartX = ref(null);
+const touchEndX = ref(null);
+
+function handleTouchStart(e) {
+  if (!isMobile()) return;
+  touchStartX.value = e.touches[0].clientX;
+}
+function handleTouchMove(e) {
+  if (!isMobile()) return;
+  touchEndX.value = e.touches[0].clientX;
+}
+function handleTouchEnd() {
+  if (!isMobile() || touchStartX.value === null || touchEndX.value === null) return;
+  const dx = touchEndX.value - touchStartX.value;
+  if (Math.abs(dx) > 40) {
+    if (dx < 0) nextSlide();
+    else prevSlide();
+  }
+  touchStartX.value = null;
+  touchEndX.value = null;
+}
 </script>
 
 <style scoped>
@@ -245,5 +286,26 @@ const closeOrderModal = () => {
     max-width: 95vw;
     padding: 0.5rem 0.2rem 0.7rem 0.2rem;
   }
+}
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0.5rem 0 0.2rem 0;
+}
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffd60055;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.carousel-dot.active {
+  background: #ffd600;
+  transform: scale(1.25);
+}
+@media (min-width: 700px) {
+  .carousel-dots { display: none; }
 }
 </style> 
