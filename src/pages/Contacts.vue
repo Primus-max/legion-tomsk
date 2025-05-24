@@ -118,6 +118,7 @@ async function submit() {
   flex: 1 1 260px;
   font-style: normal;
   max-width: 320px;
+  min-width: 0;
 }
 .contacts-card__icon {
   font-size: 2.1em;
@@ -148,16 +149,20 @@ async function submit() {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  gap: 0.7em;
+  width: 100%;
   min-width: 0;
+  overflow: hidden;
+  gap: 0.7em;
   align-items: center;
-  overflow-x: auto;
 }
 .contacts-messenger {
-  white-space: nowrap;
+  flex: 1 1 0;
   min-width: 0;
+  max-width: 100%;
+  text-align: center;
   font-size: 1em;
-  padding: 0.3em 1.1em;
+  padding: 0.3em 0.5em;
+  white-space: nowrap;
 }
 .contacts-messenger.whatsapp {
   background: linear-gradient(90deg, #25d366 60%, #128c7e 100%);
