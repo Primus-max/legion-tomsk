@@ -2,40 +2,61 @@
   <main class="portfolio-page">
     <h1 class="portfolio-title">Портфолио</h1>
     <p class="portfolio-desc">Здесь собраны лучшие работы по категориям. Выберите интересующую рубрику и вдохновляйтесь!</p>
-    <div class="portfolio-tabs">
+    <nav class="portfolio-tabs" aria-label="Рубрики портфолио">
       <button
         v-for="cat in categories"
         :key="cat.id"
         :class="['portfolio-tab', { active: activeCategory === cat.id }]"
         @click="scrollToCategory(cat.id)"
+        :aria-label="cat.title"
       >
         <span class="portfolio-tab__icon">{{ cat.icon }}</span>
         {{ cat.title }}
       </button>
-    </div>
+    </nav>
     <div class="portfolio-categories">
       <section
         v-for="cat in categories"
         :key="cat.id"
         :id="cat.id"
         class="portfolio-category"
+        :aria-labelledby="'cat-title-' + cat.id"
       >
-        <h2 class="portfolio-category__title">
+        <h2 class="portfolio-category__title" :id="'cat-title-' + cat.id">
           <span class="portfolio-category__icon">{{ cat.icon }}</span>
           {{ cat.title }}
         </h2>
         <p class="portfolio-category__desc">{{ cat.desc }}</p>
-        <div v-if="works[cat.id] && works[cat.id].length" class="portfolio-gallery">
-          <div
-            v-for="work in works[cat.id]"
-            :key="work.id"
-            class="portfolio-gallery__item"
+        <div v-if="works[cat.id] && works[cat.id].length" class="carousel-row">
+          <button
+            class="carousel-arrow left"
+            :class="{ disabled: carouselIndexes[cat.id] === 0 }"
+            @click="prevSlide(cat.id)"
+            aria-label="Назад"
           >
-            <div class="portfolio-gallery__img-wrap">
-              <img :src="work.image" alt="Работа" class="portfolio-gallery__img" />
+            ‹
+          </button>
+          <div class="portfolio-carousel">
+            <div
+              v-for="(work, idx) in works[cat.id]"
+              :key="work.id"
+              class="portfolio-gallery__item"
+              v-show="isVisibleInCarousel(cat.id, idx)"
+            >
+              <div class="portfolio-gallery__img-wrap">
+                <img :src="work.image" :alt="cat.title + ' работа ' + (idx+1)" class="portfolio-gallery__img" loading="lazy" />
+              </div>
+              <button class="portfolio-gallery__cta" aria-label="Рассчитать">Рассчитать</button>
             </div>
-            <button class="portfolio-gallery__cta">Рассчитать</button>
           </div>
+          <button
+            class="carousel-arrow right"
+            :class="{ disabled: carouselIndexes[cat.id] >= works[cat.id].length - visibleSlides }"
+            @click="nextSlide(cat.id)"
+            aria-label="Вперёд"
+          >
+            ›
+          </button>
         </div>
         <div v-else class="portfolio-gallery__empty">
           В этой категории скоро появятся работы!
@@ -53,7 +74,11 @@ export default {
 </script>
 
 <script setup>
-import { ref } from 'vue';
+import {
+  computed,
+  onMounted,
+  ref,
+} from 'vue';
 
 import FooterSection from '../components/sections/FooterSection.vue';
 
@@ -72,19 +97,65 @@ const works = {
     { id: 1, image: 'https://placehold.co/400x300?text=Перетяжка+1' },
     { id: 2, image: 'https://placehold.co/400x300?text=Перетяжка+2' },
     { id: 3, image: 'https://placehold.co/400x300?text=Перетяжка+3' },
+    { id: 4, image: 'https://placehold.co/400x300?text=Перетяжка+4' },
+    { id: 5, image: 'https://placehold.co/400x300?text=Перетяжка+5' },
   ],
   tyuning: [
     { id: 1, image: 'https://placehold.co/400x300?text=Тюнинг+1' },
     { id: 2, image: 'https://placehold.co/400x300?text=Тюнинг+2' },
+    { id: 3, image: 'https://placehold.co/400x300?text=Тюнинг+3' },
+    { id: 4, image: 'https://placehold.co/400x300?text=Тюнинг+4' },
   ],
-  restavraciya: [],
-  poshiv: [],
-  vyshivka: [],
-  elektro: [],
-  kovry: [],
+  restavraciya: [
+    { id: 1, image: 'https://placehold.co/400x300?text=Реставрация+1' },
+    { id: 2, image: 'https://placehold.co/400x300?text=Реставрация+2' },
+  ],
+  poshiv: [
+    { id: 1, image: 'https://placehold.co/400x300?text=Пошив+1' },
+    { id: 2, image: 'https://placehold.co/400x300?text=Пошив+2' },
+    { id: 3, image: 'https://placehold.co/400x300?text=Пошив+3' },
+  ],
+  vyshivka: [
+    { id: 1, image: 'https://placehold.co/400x300?text=Вышивка+1' },
+    { id: 2, image: 'https://placehold.co/400x300?text=Вышивка+2' },
+  ],
+  elektro: [
+    { id: 1, image: 'https://placehold.co/400x300?text=Электро+1' },
+    { id: 2, image: 'https://placehold.co/400x300?text=Электро+2' },
+    { id: 3, image: 'https://placehold.co/400x300?text=Электро+3' },
+  ],
+  kovry: [
+    { id: 1, image: 'https://placehold.co/400x300?text=Ковры+1' },
+    { id: 2, image: 'https://placehold.co/400x300?text=Ковры+2' },
+    { id: 3, image: 'https://placehold.co/400x300?text=Ковры+3' },
+    { id: 4, image: 'https://placehold.co/400x300?text=Ковры+4' },
+  ],
 };
 
 const activeCategory = ref(categories[0].id);
+const carouselIndexes = ref({});
+const visibleSlides = ref(3);
+const showArrows = ref(true);
+
+function updateVisibleSlides() {
+  if (window.innerWidth < 700) {
+    visibleSlides.value = 1;
+    showArrows.value = false;
+  } else if (window.innerWidth < 1100) {
+    visibleSlides.value = 2;
+    showArrows.value = true;
+  } else {
+    visibleSlides.value = 3;
+    showArrows.value = true;
+  }
+}
+onMounted(() => {
+  updateVisibleSlides();
+  window.addEventListener('resize', updateVisibleSlides);
+  categories.forEach(cat => {
+    if (!(cat.id in carouselIndexes.value)) carouselIndexes.value[cat.id] = 0;
+  });
+});
 
 function scrollToCategory(id) {
   activeCategory.value = id;
@@ -92,6 +163,16 @@ function scrollToCategory(id) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+function prevSlide(catId) {
+  if (carouselIndexes.value[catId] > 0) carouselIndexes.value[catId]--;
+}
+function nextSlide(catId) {
+  if (carouselIndexes.value[catId] < works[catId].length - visibleSlides.value) carouselIndexes.value[catId]++;
+}
+function isVisibleInCarousel(catId, idx) {
+  const start = carouselIndexes.value[catId];
+  return idx >= start && idx < start + visibleSlides.value;
 }
 </script>
 
@@ -177,11 +258,47 @@ function scrollToCategory(id) {
   margin-bottom: 1.5em;
   font-size: 1.1rem;
 }
-.portfolio-gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+.carousel-row {
+  display: flex;
+  align-items: center;
   width: 100%;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.portfolio-carousel {
+  display: flex;
+  gap: 2rem;
+  flex: 1 1 0;
+  overflow: visible;
+}
+.carousel-arrow {
+  flex: 0 0 36px;
+  background: transparent;
+  color: #ffd600;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.7rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: background 0.2s, color 0.2s, opacity 0.2s, filter 0.2s;
+  pointer-events: auto;
+  outline: none;
+}
+.carousel-arrow:hover {
+  color: #fff700;
+  filter: drop-shadow(0 0 6px #ffd600);
+  opacity: 1;
+}
+.carousel-arrow.disabled {
+  opacity: 0;
+  pointer-events: none;
 }
 .portfolio-gallery__item {
   background: #181818;
@@ -191,6 +308,8 @@ function scrollToCategory(id) {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 320px;
+  max-width: 400px;
   transition: box-shadow 0.2s, transform 0.2s;
   animation: fadeInUp 0.7s;
 }
@@ -252,14 +371,55 @@ function scrollToCategory(id) {
     transform: none;
   }
 }
+@media (max-width: 1100px) {
+  .portfolio-gallery__item {
+    min-width: 260px;
+    max-width: 320px;
+  }
+  .carousel-arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 1.1rem;
+  }
+}
 @media (max-width: 900px) {
   .portfolio-page {
     padding: 1rem 0.5rem 2rem 0.5rem;
     gap: 1.5rem;
   }
-  .portfolio-gallery {
-    grid-template-columns: 1fr;
+  .portfolio-carousel {
     gap: 1.2rem;
+  }
+  .portfolio-gallery__item {
+    min-width: 220px;
+    max-width: 260px;
+    padding: 0.8rem 0.5rem 1rem 0.5rem;
+  }
+}
+@media (max-width: 700px) {
+  .portfolio-tabs {
+    top: 56px;
+    gap: 0.5rem;
+  }
+  .portfolio-title {
+    font-size: 1.5rem;
+  }
+  .portfolio-category__title {
+    font-size: 1.1rem;
+  }
+  .portfolio-category__desc {
+    font-size: 0.98rem;
+  }
+  .carousel-arrow {
+    display: none;
+  }
+  .portfolio-carousel {
+    gap: 0.5rem;
+  }
+  .portfolio-gallery__item {
+    min-width: 90vw;
+    max-width: 95vw;
+    padding: 0.5rem 0.2rem 0.7rem 0.2rem;
   }
 }
 </style> 
