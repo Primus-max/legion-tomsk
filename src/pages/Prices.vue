@@ -16,8 +16,13 @@
         </tr>
       </tbody>
     </table>
+    <FooterSection />
   </main>
 </template>
+
+<script setup>
+import FooterSection from '../components/sections/FooterSection.vue';
+</script>
 
 <script>
 export default {
