@@ -2,6 +2,7 @@
   <div class="portfolio-gallery-block">
     <div class="carousel-row">
       <button
+        v-if="visibleSlides > 1"
         class="carousel-arrow left"
         :class="{ disabled: currentIndex === 0 }"
         @click="prevSlide"
@@ -9,7 +10,12 @@
       >
         ‹
       </button>
-      <div class="portfolio-carousel">
+      <div
+        class="portfolio-carousel"
+        @touchstart="handleTouchStart"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+      >
         <div
           v-for="(work, idx) in works"
           :key="work.id"
@@ -27,6 +33,7 @@
         </div>
       </div>
       <button
+        v-if="visibleSlides > 1"
         class="carousel-arrow right"
         :class="{ disabled: currentIndex >= works.length - visibleSlides }"
         @click="nextSlide"
@@ -34,6 +41,14 @@
       >
         ›
       </button>
+    </div>
+    <div v-if="visibleSlides === 1 && works.length > 1" class="carousel-dots">
+      <span
+        v-for="idx in getDots"
+        :key="'dot-' + idx"
+        class="carousel-dot"
+        :class="{ active: idx === currentIndex }"
+      ></span>
     </div>
     <button v-if="works.length" class="portfolio-gallery__cta-main" @click="openOrderModal">Заказать</button>
     <ImageModalSlider
@@ -50,6 +65,7 @@
 <script setup>
 import {
   computed,
+  onBeforeUnmount,
   onMounted,
   ref,
   watch,
@@ -78,6 +94,9 @@ onMounted(() => {
   updateVisibleSlides();
   window.addEventListener('resize', updateVisibleSlides);
 });
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateVisibleSlides);
+});
 
 function isVisible(idx) {
   return idx >= currentIndex.value && idx < currentIndex.value + visibleSlides.value;
@@ -89,6 +108,7 @@ function nextSlide() {
   if (currentIndex.value < props.works.length - visibleSlides.value) currentIndex.value++;
 }
 function openModal(idx) {
+  if (window.innerWidth < 700) return;
   modalIndex.value = idx;
   modalVisible.value = true;
 }
@@ -101,6 +121,50 @@ const openOrderModal = () => {
 const closeOrderModal = () => {
   orderModalVisible.value = false;
 };
+
+// --- SWIPE для мобильного ---
+const isMobile = () => window.innerWidth < 700;
+const touchStartX = ref(null);
+const touchEndX = ref(null);
+
+function handleTouchStart(e) {
+  if (!isMobile()) return;
+  touchStartX.value = e.touches[0].clientX;
+}
+function handleTouchMove(e) {
+  if (!isMobile()) return;
+  touchEndX.value = e.touches[0].clientX;
+}
+function handleTouchEnd() {
+  if (!isMobile() || touchStartX.value === null || touchEndX.value === null) return;
+  const dx = touchEndX.value - touchStartX.value;
+  if (Math.abs(dx) > 40) {
+    if (dx < 0) nextSlide();
+    else prevSlide();
+  }
+  touchStartX.value = null;
+  touchEndX.value = null;
+}
+
+// --- ТОЧКИ СЛАЙДЕРА (Instagram Stories style, максимум 5) ---
+const maxDots = 5;
+const getDots = computed(() => {
+  const total = props.works.length;
+  const current = currentIndex.value;
+  if (total <= maxDots) {
+    return Array.from({ length: total }, (_, i) => i);
+  }
+  // Если активная ближе к началу
+  if (current <= 2) {
+    return [0, 1, 2, 3, 4];
+  }
+  // Если активная ближе к концу
+  if (current >= total - 3) {
+    return [total - 5, total - 4, total - 3, total - 2, total - 1];
+  }
+  // Активная где-то в середине
+  return [current - 2, current - 1, current, current + 1, current + 2];
+});
 </script>
 
 <style scoped>
@@ -245,5 +309,28 @@ const closeOrderModal = () => {
     max-width: 95vw;
     padding: 0.5rem 0.2rem 0.7rem 0.2rem;
   }
+}
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0.5rem 0 0.2rem 0;
+}
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffd60055;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
+  display: inline-block;
+  opacity: 0.5;
+}
+.carousel-dot.active {
+  background: #ffd600;
+  transform: scale(1.25);
+  opacity: 1;
+}
+@media (min-width: 700px) {
+  .carousel-dots { display: none; }
 }
 </style> 

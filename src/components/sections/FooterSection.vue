@@ -31,8 +31,10 @@
         </div>
         <div class="footer-section__map-wrap">
           <div class="footer-section__map" aria-label="Карта">
-            <!-- Здесь может быть iframe Яндекс/Google карты -->
-            <span class="footer-section__map-placeholder">Карта будет тут</span>
+            <iframe
+              class="footer-section__yandex-map"
+              src="https://yandex.ru/map-widget/v1/?um=constructor%3A1b2e3c4d5e6f7a8b9c0d1e2f3a4b5c6d&amp;source=constructor"
+              width="100%" height="220" frameborder="0" allowfullscreen title="Карта проезда"></iframe>
           </div>
         </div>
       </div>
@@ -76,9 +78,13 @@
 }
 .footer-section__content {
   display: flex;
+  flex-direction: column;
   gap: 48px;
   width: 100%;
   justify-content: space-between;
+  min-height: 0;
+  height: 100%;
+  align-items: stretch;
 }
 .footer-section__info {
   display: flex;
@@ -153,42 +159,84 @@
   }
 }
 .footer-section__map-wrap {
-  flex: 1 1 340px;
-  min-width: 220px;
-  max-width: 520px;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100vw;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+  min-height: 0;
+  height: 100%;
 }
 .footer-section__map {
   width: 100%;
-  min-height: 220px;
-  height: 220px;
+  min-height: 0;
+  height: 100%;
   background: #181818;
   border-radius: 18px;
   box-shadow: 0 2px 24px #ffd60022, 0 0 0 2px #ffd60033;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
   overflow: hidden;
   position: relative;
+}
+.footer-section__yandex-map {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 .footer-section__map-placeholder {
   color: #ffd60099;
   font-size: 1.1rem;
   letter-spacing: 0.02em;
 }
+@media (min-width: 901px) {
+  .footer-section__content {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 48px;
+    height: auto;
+  }
+  .footer-section__info {
+    min-width: 260px;
+    max-width: 340px;
+  }
+  .footer-section__map-wrap {
+    max-width: 520px;
+    min-width: 220px;
+    height: 100%;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+  .footer-section__map {
+    min-height: 220px;
+    height: 100%;
+  }
+  .footer-section__yandex-map {
+    min-height: 220px;
+    height: 100%;
+  }
+}
 @media (max-width: 900px) {
   .footer-section__content {
     flex-direction: column;
     gap: 32px;
     align-items: center;
+    min-height: 0;
+    height: 100%;
   }
   .footer-section__map-wrap {
     max-width: 100vw;
     width: 100%;
+    min-height: 0;
+    height: auto;
   }
   .footer-section__map {
+    min-height: 180px;
+    height: 180px;
+  }
+  .footer-section__yandex-map {
     min-height: 180px;
     height: 180px;
   }
@@ -217,9 +265,13 @@
     font-size: 1.05rem;
   }
   .footer-section__map {
-    min-height: 120px;
-    height: 120px;
+    min-height: 140px;
+    height: 140px;
     border-radius: 12px;
+  }
+  .footer-section__yandex-map {
+    min-height: 140px;
+    height: 140px;
   }
   .footer-section__socials {
     gap: 12px;
