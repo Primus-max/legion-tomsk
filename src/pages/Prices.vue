@@ -296,11 +296,11 @@ const categories = [
 }
 @media (max-width: 700px) {
   .prices-page {
-    padding: 12px 0 24px 0;
+    padding: 12px 8px 24px 8px;
   }
   .price-category {
     margin-bottom: 1.2em;
-    padding: 0.7em 0.1em 0.7em 0.1em;
+    padding: 0.7em 8px 0.7em 8px;
   }
   .price-category__header {
     gap: 0.7em;
@@ -310,12 +310,17 @@ const categories = [
     height: 28px;
   }
   .price-category__table th, .price-category__table td {
-    padding: 6px 2px;
+    padding: 8px 4px;
     font-size: 0.91rem;
   }
   .order-btn {
     padding: 7px 10px;
     font-size: 0.93rem;
+  }
+  .price-cell {
+    white-space: nowrap;
+    word-break: keep-all;
+    font-size: 1.05rem;
   }
 }
 </style> 
