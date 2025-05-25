@@ -2,6 +2,7 @@
   <div class="portfolio-gallery-block">
     <div class="carousel-row">
       <button
+        v-if="visibleSlides > 1"
         class="carousel-arrow left"
         :class="{ disabled: currentIndex === 0 }"
         @click="prevSlide"
@@ -32,6 +33,7 @@
         </div>
       </div>
       <button
+        v-if="visibleSlides > 1"
         class="carousel-arrow right"
         :class="{ disabled: currentIndex >= works.length - visibleSlides }"
         @click="nextSlide"
@@ -42,7 +44,7 @@
     </div>
     <div v-if="visibleSlides === 1 && works.length > 1" class="carousel-dots">
       <span
-        v-for="(work, idx) in works"
+        v-for="idx in getDots"
         :key="'dot-' + idx"
         class="carousel-dot"
         :class="{ active: idx === currentIndex }"
@@ -106,6 +108,7 @@ function nextSlide() {
   if (currentIndex.value < props.works.length - visibleSlides.value) currentIndex.value++;
 }
 function openModal(idx) {
+  if (window.innerWidth < 700) return;
   modalIndex.value = idx;
   modalVisible.value = true;
 }
@@ -142,6 +145,26 @@ function handleTouchEnd() {
   touchStartX.value = null;
   touchEndX.value = null;
 }
+
+// --- ТОЧКИ СЛАЙДЕРА (Instagram Stories style, максимум 5) ---
+const maxDots = 5;
+const getDots = computed(() => {
+  const total = props.works.length;
+  const current = currentIndex.value;
+  if (total <= maxDots) {
+    return Array.from({ length: total }, (_, i) => i);
+  }
+  // Если активная ближе к началу
+  if (current <= 2) {
+    return [0, 1, 2, 3, 4];
+  }
+  // Если активная ближе к концу
+  if (current >= total - 3) {
+    return [total - 5, total - 4, total - 3, total - 2, total - 1];
+  }
+  // Активная где-то в середине
+  return [current - 2, current - 1, current, current + 1, current + 2];
+});
 </script>
 
 <style scoped>
@@ -298,12 +321,14 @@ function handleTouchEnd() {
   height: 9px;
   border-radius: 50%;
   background: #ffd60055;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
   display: inline-block;
+  opacity: 0.5;
 }
 .carousel-dot.active {
   background: #ffd600;
   transform: scale(1.25);
+  opacity: 1;
 }
 @media (min-width: 700px) {
   .carousel-dots { display: none; }

@@ -63,6 +63,11 @@ const works = {
     { id: 3, image: 'https://placehold.co/400x300?text=Перетяжка+3' },
     { id: 4, image: 'https://placehold.co/400x300?text=Перетяжка+4' },
     { id: 5, image: 'https://placehold.co/400x300?text=Перетяжка+5' },
+    { id: 6, image: 'https://placehold.co/400x300?text=Перетяжка+6' },
+    { id: 7, image: 'https://placehold.co/400x300?text=Перетяжка+7' },
+    { id: 8, image: 'https://placehold.co/400x300?text=Перетяжка+8' },
+    { id: 9, image: 'https://placehold.co/400x300?text=Перетяжка+9' },
+    { id: 10, image: 'https://placehold.co/400x300?text=Перетяжка+10' },
   ],
   tyuning: [
     { id: 1, image: 'https://placehold.co/400x300?text=Тюнинг+1' },
