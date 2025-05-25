@@ -253,8 +253,20 @@ async function submit() {
   }
   .contacts-card {
     min-width: 0;
-    padding: 0.8em 0.7em;
+    padding: 0.5em 0.5em;
     max-width: 100%;
+    gap: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  .contacts-card__icon {
+    font-size: 1.3em;
+    margin-top: 0;
+  }
+  .contacts-card__label {
+    font-size: 0.98em;
+  }
+  .contacts-card__value {
+    font-size: 0.98em;
   }
   .contacts-messengers {
     flex-wrap: wrap;
@@ -267,16 +279,38 @@ async function submit() {
 }
 @media (max-width: 700px) {
   .contacts-page {
-    padding: 10px 0 24px 0;
+    padding: 10px 8px 24px 8px;
   }
-  .contacts-title {
-    font-size: 1.3rem;
+  .contacts-blocks {
+    display: block;
+    gap: 0.7em;
+    margin-bottom: 1.2em;
+    padding: 0.5em 0.2em;
   }
-  .contacts-form-title {
-    font-size: 1.05rem;
+  .contacts-card {
+    background: #232323;
+    box-shadow: 0 2px 10px #ffd60011;
+    border-radius: 10px;
+    padding: 0.7em 0.8em;
+    margin-bottom: 0.7em;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6em;
+    min-width: unset;
+    max-width: unset;
+    flex: unset;
   }
-  .contacts-map {
-    height: 180px;
+  .contacts-card__icon {
+    font-size: 1.2em;
+    margin-top: 0.1em;
+  }
+  .contacts-card__label {
+    font-size: 1em;
+    margin-bottom: 0.1em;
+  }
+  .contacts-card__value {
+    font-size: 0.98em;
+    margin-bottom: 0.1em;
   }
 }
 </style> 
