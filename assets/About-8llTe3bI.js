@@ -1,0 +1,1 @@
+import{F as o}from"./FooterSection-DCPiiJa5.js";import{d as n,b as t,j as r,o as s}from"./index-BTmVJ9D_.js";const a={name:"About"},i=Object.assign(a,{setup(l){return(u,e)=>(s(),n("main",null,[e[0]||(e[0]=t("h1",null,"О компании",-1)),e[1]||(e[1]=t("p",null,"Информация о нашей компании и команде.",-1)),r(o)]))}});export{i as default};
