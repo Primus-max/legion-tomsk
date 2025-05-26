@@ -51,10 +51,10 @@ export const POPULAR_MODELS = {
 
 // Материалы с миниатюрами (заглушки, заменить на реальные пути)
 export const MATERIALS = [
-  { value: 'Кожа', label: 'Кожа', img: '/assets/materials/leather.jpg' },
-  { value: 'Алькантара', label: 'Алькантара', img: '/assets/materials/alcantara.jpg' },
-  { value: 'Экокожа', label: 'Экокожа', img: '/assets/materials/eco-leather.jpg' },
-  { value: 'Комбинированно', label: 'Комбинированно', img: '/assets/materials/combo.jpg' },
+  { value: 'Кожа', label: 'Кожа', img: '/src/assets/materials/leather.png' },
+  { value: 'Алькантара', label: 'Алькантара', img: '/src/assets/materials/alcantara.png' },
+  { value: 'Экокожа', label: 'Экокожа', img: '/src/assets/materials/eco-leather.png' },
+  { value: 'Комбинированно', label: 'Комбинированно', img: '/src/assets/materials/combined.png' },
 ];
 
 // Цвета (можно расширять)

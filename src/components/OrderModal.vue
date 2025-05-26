@@ -33,15 +33,19 @@
                       <input v-if="field.allowCustom && form[field.key] === 'Другое'" v-model="form[field.key]" placeholder="Введите значение" />
                     </template>
                     <template v-else-if="field.type === 'carousel'">
-                      <div class="material-carousel__wrap" @mouseenter="carouselHover = true" @mouseleave="carouselHover = false">
-                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow left" @click="scrollMaterial(-1)">‹</button>
+                      <div class="material-carousel__wrap">
+                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow left" @click="scrollMaterial(-1)">
+                          <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="none" stroke="#FFD600" stroke-width="2"/><polyline points="16,8 10,14 16,20" fill="none" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                         <div class="material-carousel" ref="materialCarouselRef">
                           <div v-for="mat in field.options" :key="mat.value" class="material-carousel__item" :class="{ selected: form.material === mat.value }" @click="form.material = mat.value">
                             <img :src="mat.img" :alt="mat.label" class="material-carousel__img" />
                             <div class="material-carousel__label">{{ mat.label }}</div>
                           </div>
                         </div>
-                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow right" @click="scrollMaterial(1)">›</button>
+                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow right" @click="scrollMaterial(1)">
+                          <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="none" stroke="#FFD600" stroke-width="2"/><polyline points="12,8 18,14 12,20" fill="none" stroke="#FFD600" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                       </div>
                     </template>
                     <template v-else-if="field.type === 'textarea'">
@@ -177,12 +181,17 @@ const getModelOptions = computed(() => {
 });
 
 const materialCarouselRef = ref(null);
-const carouselHover = ref(false);
-const showCarouselArrows = computed(() => carouselHover.value && window.innerWidth > 700);
+const showCarouselArrows = computed(() => window.innerWidth > 700);
 function scrollMaterial(dir) {
-  const el = materialCarouselRef.value;
+  let el = materialCarouselRef.value;
+  if (Array.isArray(el)) el = el[0];
+  if (el && el.$el) el = el.$el;
   if (el) {
-    el.scrollBy({ left: dir * 120, behavior: 'smooth' });
+    // Находим ширину одного элемента + gap
+    const item = el.querySelector('.material-carousel__item');
+    const gap = parseFloat(getComputedStyle(el).gap) || 0;
+    const scrollStep = item ? item.offsetWidth + gap : 120;
+    el.scrollBy({ left: dir * scrollStep, behavior: 'smooth' });
   }
 }
 
@@ -325,38 +334,52 @@ async function submit() {
 .material-carousel__wrap {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  overflow: visible;
-  padding-bottom: 0.2em;
+  justify-content: center;
   position: relative;
   width: 100%;
+  padding: 0 56px;
+  gap: 0;
 }
 .material-carousel {
   display: flex;
-  gap: 0.7em;
+  gap: 1.3em;
   width: 100%;
+  min-width: 0;
+  flex: 1 1 auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  justify-content: center;
 }
 .carousel-arrow {
-  background: rgba(35,35,35,0.7);
-  color: #ffd600;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
   border: none;
-  font-size: 2rem;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: none;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 8px #ffd60033;
   transition: background 0.2s, opacity 0.2s;
   z-index: 2;
-  opacity: 0.7;
+  opacity: 1;
+  box-shadow: none;
+  pointer-events: auto;
 }
-.material-carousel__wrap:hover .carousel-arrow {
-  display: flex;
+.carousel-arrow.left {
+  left: 12px;
+}
+.carousel-arrow.right {
+  right: 12px;
+}
+.carousel-arrow svg {
+  display: block;
+}
+.carousel-arrow:active {
+  opacity: 0.7;
 }
 .material-carousel__item {
   display: flex;
@@ -364,10 +387,10 @@ async function submit() {
   align-items: center;
   border: 2px solid transparent;
   border-radius: 10px;
-  padding: 0.3em 0.7em 0.5em 0.7em;
+  padding: 0.3em 1.1em 0.5em 1.1em;
   background: #232323;
   cursor: pointer;
-  min-width: 70px;
+  min-width: 90px;
   transition: border 0.2s, box-shadow 0.2s;
 }
 .material-carousel__item.selected {
@@ -375,16 +398,22 @@ async function submit() {
   box-shadow: 0 2px 8px #ffd60055;
 }
 .material-carousel__img {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 0.3em;
+  background: #181818;
+  box-shadow: 0 1px 4px #0006;
 }
 .material-carousel__label {
-  font-size: 0.9em;
+  font-size: 1em;
   color: #ffd600;
   text-align: center;
+  margin-top: 0.2em;
+  word-break: break-word;
+  line-height: 1.15;
+  font-weight: 600;
 }
 .order-modal__title {
   margin-bottom: 1.2rem;
@@ -450,6 +479,9 @@ async function submit() {
   }
   .order-modal__fields {
     max-width: 100%;
+    padding: 0;
+  }
+  .material-carousel__wrap {
     padding: 0;
   }
 }
