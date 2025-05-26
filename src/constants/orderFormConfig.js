@@ -70,7 +70,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Сиденья', 'Руль', 'Потолок', 'Двери', 'Пол', 'Торпедо', 'Подлокотник', 'Комбинированно'] }),
       new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: true, options: MATERIALS }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
@@ -86,7 +85,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Тюнинг салона', 'Детали интерьера', 'Панели', 'Комбинированно'] }),
       new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: false, options: MATERIALS }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
@@ -102,7 +100,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Восстановление кожи', 'Ремонт сидений', 'Пластик', 'Комбинированно'] }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
@@ -117,7 +114,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Пошив чехлов', 'Пошив подлокотника', 'Пошив ковриков', 'Комбинированно'] }),
       new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: true, options: MATERIALS }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
@@ -133,7 +129,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Вышивка логотипа', 'Декоративная вышивка', 'Именная вышивка', 'Комбинированно'] }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
@@ -148,7 +143,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Установка подсветки', 'Установка USB', 'Мониторинг', 'Другое'] }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
       new OrderField({ key: 'name', label: 'Имя', type: 'text', required: true }),
@@ -162,7 +156,6 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'year', label: 'Год выпуска', type: 'number', required: false }),
       new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['EVO ковры', '3D ковры', 'Органайзеры', 'Другое'] }),
       new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: false, options: MATERIALS }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),

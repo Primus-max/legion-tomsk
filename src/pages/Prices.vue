@@ -31,7 +31,7 @@
               <div v-if="item.desc" class="service-desc">{{ item.desc }}</div>
             </td>
             <td class="price-cell">{{ item.price }}</td>
-            <td><button class="order-btn" @click="openOrderModal(item.title, cat.label)">Заказать</button></td>
+            <td><button class="order-btn" @click="openOrderModal(cat.key, item.title)">Заказать</button></td>
           </tr>
         </tbody>
       </table>
@@ -39,7 +39,7 @@
     <OrderModal
       v-if="orderModalVisible"
       :defaultService="orderModalService"
-      :defaultCategory="orderModalCategory"
+      :defaultWorkType="orderModalWorkType"
       @close="closeOrderModal"
     />
     <FooterSection />
@@ -54,11 +54,11 @@ import FooterSection from '../components/sections/FooterSection.vue';
 
 const orderModalVisible = ref(false);
 const orderModalService = ref('');
-const orderModalCategory = ref('');
+const orderModalWorkType = ref('');
 
-function openOrderModal(service, category) {
-  orderModalService.value = service;
-  orderModalCategory.value = category;
+function openOrderModal(serviceKey, workType) {
+  orderModalService.value = serviceKey;
+  orderModalWorkType.value = workType;
   orderModalVisible.value = true;
 }
 function closeOrderModal() {

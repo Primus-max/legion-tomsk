@@ -5,8 +5,8 @@
       <h2 class="order-modal__title">Получить расчет</h2>
       <form class="order-modal__form" @submit.prevent="submit">
         <div class="order-modal__fields">
-          <!-- Выбор услуги, если не задана -->
-          <div v-if="!selectedServiceKey">
+          <!-- Если услуга не выбрана (открыто из хедера) — показываем селект -->
+          <div v-if="!selectedServiceKey && !props.defaultService">
             <label>Выберите услугу*
               <select v-model="selectedServiceKey" required>
                 <option disabled value="">Выберите</option>
@@ -14,7 +14,7 @@
               </select>
             </label>
           </div>
-          <!-- Динамические поля -->
+          <!-- Если услуга выбрана (defaultService) — селект не показываем -->
           <template v-else>
             <div v-if="selectedService" class="order-modal__service-label">{{ selectedService.label }}</div>
             <template v-if="selectedService" v-for="field in selectedService.fields" :key="field.key">
@@ -119,10 +119,10 @@ import {
 const emit = defineEmits(['close']);
 const props = defineProps({
   defaultService: { type: String, default: '' },
+  defaultWorkType: { type: String, default: '' },
   defaultCategory: { type: String, default: '' },
 });
 
-// Функция для поиска key по label или key
 function findServiceKey(val) {
   if (!val) return '';
   const byKey = SERVICES.find(s => s.key === val);
@@ -135,32 +135,31 @@ function findServiceKey(val) {
 const selectedServiceKey = ref(findServiceKey(props.defaultService));
 const selectedService = computed(() => SERVICES.find(s => s.key === selectedServiceKey.value) || null);
 
-// Для формы
 const form = ref({});
 const loading = ref(false);
 const success = ref(false);
 
-// --- Выбор услуги ---
 const serviceOptions = SERVICES.map(s => ({ value: s.key, label: s.label }));
 
-// --- Динамические поля ---
+// ГАРАНТИРОВАННАЯ инициализация формы при появлении selectedService
 watch(
-  () => selectedServiceKey.value,
-  (key) => {
-    const service = SERVICES.find(s => s.key === key);
+  selectedService,
+  (service) => {
     if (service) {
-      // Сбросить форму под новую услугу
       form.value = {};
       service.fields.forEach(f => {
-        form.value[f.key] = '';
+        if (f.key === 'workType' && props.defaultWorkType) {
+          form.value[f.key] = props.defaultWorkType;
+        } else {
+          form.value[f.key] = '';
+        }
       });
     }
   },
   { immediate: true }
 );
 
-// --- Марка/модель авто: логика выпадающего списка + ручной ввод ---
-const brandInputMode = ref(false); // true если ручной ввод
+const brandInputMode = ref(false);
 const modelInputMode = ref(false);
 
 watch(
@@ -170,7 +169,6 @@ watch(
       brandInputMode.value = true;
     } else {
       brandInputMode.value = false;
-      // Если выбрана марка, сбрасываем модель
       form.value.model = '';
       modelInputMode.value = false;
     }
@@ -197,7 +195,6 @@ function close() {
 
 async function submit() {
   loading.value = true;
-  // Мок-отправка
   await new Promise(r => setTimeout(r, 1200));
   loading.value = false;
   success.value = true;
@@ -259,14 +256,13 @@ async function submit() {
   gap: 1.2rem;
 }
 .order-modal__fields {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 2.5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 2.5%;
 }
 .order-modal__fields label {
   display: flex;
   flex-direction: column;
-  flex: 1 1 47%;
   min-width: 140px;
   font-size: 1rem;
   gap: 0.3em;
@@ -357,11 +353,8 @@ async function submit() {
     min-width: 0;
   }
   .order-modal__fields {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     gap: 0.7rem;
-  }
-  .order-modal__fields label {
-    flex: 1 1 100%;
   }
 }
 @keyframes fadeIn {
