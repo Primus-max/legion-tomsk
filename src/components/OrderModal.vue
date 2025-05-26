@@ -189,12 +189,23 @@ function scrollMaterial(dir) {
   if (el) {
     const item = el.querySelector('.material-carousel__item');
     const gap = parseFloat(getComputedStyle(el).gap) || 0;
-    const scrollStep = item ? item.offsetWidth + gap : 120;
-    const maxScroll = el.scrollWidth - el.clientWidth;
+    const scrollStep = (item ? item.offsetWidth : 120) + gap;
+    const visibleWidth = el.clientWidth;
+    const maxScroll = el.scrollWidth - visibleWidth;
+    
+    // Вычисляем следующую позицию скролла
     let nextScroll = el.scrollLeft + dir * scrollStep;
-    if (nextScroll < 0) nextScroll = 0;
-    if (nextScroll > maxScroll) nextScroll = maxScroll;
-    el.scrollTo({ left: nextScroll, behavior: 'smooth' });
+    
+    // Если скроллим влево и следующая позиция < 0, скроллим в начало
+    if (dir < 0 && nextScroll < 0) nextScroll = 0;
+    
+    // Если скроллим вправо и следующая позиция > maxScroll, скроллим в конец
+    if (dir > 0 && nextScroll > maxScroll) nextScroll = maxScroll;
+    
+    el.scrollTo({
+      left: nextScroll,
+      behavior: 'smooth'
+    });
   }
 }
 
@@ -340,8 +351,9 @@ async function submit() {
   justify-content: center;
   position: relative;
   width: 100%;
-  padding: 0 56px;
+  padding: 0 40px;
   gap: 0;
+  overflow: hidden;
 }
 .material-carousel {
   display: flex;
@@ -349,11 +361,13 @@ async function submit() {
   width: 100%;
   min-width: 0;
   flex: 1 1 auto;
-  overflow-x: visible;
+  overflow-x: auto;
   scroll-behavior: smooth;
   justify-content: flex-start;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  padding: 4px;
+  margin: -4px;
 }
 .material-carousel::-webkit-scrollbar {
   display: none;
@@ -378,10 +392,10 @@ async function submit() {
   pointer-events: auto;
 }
 .carousel-arrow.left {
-  left: 12px;
+  left: 0;
 }
 .carousel-arrow.right {
-  right: 12px;
+  right: 0;
 }
 .carousel-arrow svg {
   display: block;
@@ -504,19 +518,15 @@ async function submit() {
   }
   .material-carousel__wrap {
     padding: 0;
+    overflow: visible;
   }
   .material-carousel {
     gap: 0.7em;
     overflow-x: auto;
-    overflow-y: visible;
+    padding: 4px;
+    margin: -4px;
     touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .material-carousel::-webkit-scrollbar {
-    display: none;
   }
   .material-carousel__item {
     min-width: 110px;
