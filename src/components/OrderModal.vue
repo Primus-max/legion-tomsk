@@ -404,8 +404,8 @@ async function submit() {
   opacity: 0.7;
 }
 .material-carousel__item {
-  min-width: 120px;
-  max-width: 120px;
+  min-width: 100px;
+  max-width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -413,7 +413,7 @@ async function submit() {
   border-radius: 12px;
   box-shadow: 0 2px 12px #ffd60022;
   border: 1.5px solid #ffd60033;
-  padding: 18px 12px 14px 12px;
+  padding: 12px 8px 10px 8px;
   margin: 0 2px;
   transition: box-shadow 0.2s, border-color 0.2s;
   box-sizing: border-box;
@@ -427,24 +427,24 @@ async function submit() {
   box-shadow: 0 2px 12px #ffd60022, 0 0 0 2px #ffd60055;
 }
 .material-carousel__img {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.2em;
   background: #181818;
   box-shadow: 0 1px 4px #0006;
 }
 .material-carousel__label {
   display: block;
-  font-size: 0.95em;
+  font-size: 0.9em;
   color: #ffd600;
   text-align: center;
-  margin-top: 0.2em;
+  margin-top: 0.1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100px;
+  width: 85px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.15;
@@ -529,15 +529,18 @@ async function submit() {
     -webkit-overflow-scrolling: touch;
   }
   .material-carousel__item {
-    min-width: 110px;
-    max-width: 110px;
-    padding: 14px 8px 12px 8px;
-    border-radius: 14px;
-    box-sizing: border-box;
+    min-width: 90px;
+    max-width: 90px;
+    padding: 10px 6px 8px 6px;
+    border-radius: 12px;
+  }
+  .material-carousel__img {
+    width: 55px;
+    height: 55px;
   }
   .material-carousel__label {
     font-size: 0.85em;
-    width: 70px;
+    width: 65px;
   }
   .order-modal__scroll {
     overflow-x: hidden;
