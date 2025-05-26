@@ -32,7 +32,7 @@ export class ServiceConfig {
   }
 }
 
-// Популярные марки и модели авто (можно расширять)
+// Популярные марки и модели авто
 export const POPULAR_BRANDS = [
   'Toyota', 'BMW', 'Mercedes', 'Audi', 'Lexus', 'Volkswagen', 'Hyundai', 'Kia', 'Ford', 'Nissan',
 ];
@@ -49,7 +49,7 @@ export const POPULAR_MODELS = {
   Nissan: ['Qashqai', 'X-Trail', 'Almera'],
 };
 
-// Материалы с миниатюрами (заглушки, заменить на реальные пути)
+// Материалы с миниатюрами 
 export const MATERIALS = [
   { value: 'Кожа', label: 'Кожа', img: import.meta.env.BASE_URL + 'images/materials/leather.jpg' },
   { value: 'Алькантара', label: 'Алькантара', img: import.meta.env.BASE_URL + 'images/materials/alcantara.jpg' },
@@ -57,7 +57,7 @@ export const MATERIALS = [
   { value: 'Комбинированно', label: 'Комбинированно', img: import.meta.env.BASE_URL + 'images/materials/combined.jpg' },
 ];
 
-// Цвета (можно расширять)
+// Цвета 
 export const COLORS = [
   'Черный', 'Бежевый', 'Коричневый', 'Красный', 'Серый', 'Синий', 'Белый', 'Другой',
 ];

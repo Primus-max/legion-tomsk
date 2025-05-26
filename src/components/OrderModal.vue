@@ -24,7 +24,31 @@
                 <div class="order-modal__row order-modal__row--auto">
                   <label v-for="field in selectedService.fields" :key="field.key" :class="['order-modal__field', `field-${field.key}`]">
                     {{ field.label }}<span v-if="field.required">*</span>
-                    <template v-if="field.type === 'select'">
+                    <template v-if="field.key === 'brand'">
+                      <template v-if="!brandInputMode">
+                        <select v-model="form.brand" required>
+                          <option disabled value="">Выберите</option>
+                          <option v-for="b in field.options" :key="b" :value="b">{{ b }}</option>
+                          <option value="Другое">Другое</option>
+                        </select>
+                      </template>
+                      <template v-else>
+                        <input v-model="form.brand" required placeholder="Введите марку" />
+                      </template>
+                    </template>
+                    <template v-else-if="field.key === 'model'">
+                      <template v-if="!modelInputMode && getModelOptions.length">
+                        <select v-model="form.model" required>
+                          <option disabled value="">Выберите</option>
+                          <option v-for="m in getModelOptions" :key="m" :value="m">{{ m }}</option>
+                          <option value="Другое">Другое</option>
+                        </select>
+                      </template>
+                      <template v-else>
+                        <input v-model="form.model" required placeholder="Введите модель" />
+                      </template>
+                    </template>
+                    <template v-else-if="field.type === 'select'">
                       <select v-model="form[field.key]" :required="field.required">
                         <option disabled value="">Выберите</option>
                         <option v-for="opt in field.options" :key="opt.value || opt">{{ opt.label || opt }}</option>
@@ -50,30 +74,6 @@
                     </template>
                     <template v-else-if="field.type === 'textarea'">
                       <textarea v-model="form[field.key]" :required="field.required" rows="2" :placeholder="field.label" />
-                    </template>
-                    <template v-else-if="field.key === 'brand'">
-                      <template v-if="!brandInputMode">
-                        <select v-model="form.brand" required>
-                          <option disabled value="">Выберите</option>
-                          <option v-for="b in field.options" :key="b" :value="b">{{ b }}</option>
-                          <option value="Другое">Другое</option>
-                        </select>
-                      </template>
-                      <template v-else>
-                        <input v-model="form.brand" required placeholder="Введите марку" />
-                      </template>
-                    </template>
-                    <template v-else-if="field.key === 'model'">
-                      <template v-if="!modelInputMode && getModelOptions.length">
-                        <select v-model="form.model" required>
-                          <option disabled value="">Выберите</option>
-                          <option v-for="m in getModelOptions" :key="m" :value="m">{{ m }}</option>
-                          <option value="Другое">Другое</option>
-                        </select>
-                      </template>
-                      <template v-else>
-                        <input v-model="form.model" required placeholder="Введите модель" />
-                      </template>
                     </template>
                     <template v-else>
                       <input v-model="form[field.key]" :required="field.required" :placeholder="field.label" />
@@ -155,14 +155,19 @@ const modelInputMode = ref(false);
 
 watch(
   () => form.value.brand,
-  (brand) => {
+  (brand, oldBrand) => {
+    // Сброс модели при смене марки
+    if (brand !== oldBrand) {
+      form.value.model = '';
+      modelInputMode.value = false;
+    }
     if (!POPULAR_BRANDS.includes(brand)) {
       brandInputMode.value = true;
     } else {
       brandInputMode.value = false;
-      form.value.model = '';
-      modelInputMode.value = false;
     }
+    // DEBUG: выводим значения для диагностики
+    console.log('brand:', JSON.stringify(brand), 'getModelOptions:', getModelOptions.value);
   }
 );
 watch(
@@ -176,7 +181,7 @@ watch(
   }
 );
 const getModelOptions = computed(() => {
-  const brand = form.value.brand;
+  const brand = (form.value.brand || '').trim();
   return POPULAR_MODELS[brand] || [];
 });
 
