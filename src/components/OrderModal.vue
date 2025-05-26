@@ -166,8 +166,6 @@ watch(
     } else {
       brandInputMode.value = false;
     }
-    // DEBUG: выводим значения для диагностики
-    console.log('brand:', JSON.stringify(brand), 'getModelOptions:', getModelOptions.value);
   }
 );
 watch(
