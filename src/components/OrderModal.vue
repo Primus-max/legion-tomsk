@@ -239,8 +239,9 @@ async function submit() {
   box-shadow: 0 8px 48px #ffd60055;
   padding: 0;
   min-width: 320px;
-  max-width: 95vw;
-  width: 100%;
+  max-width: 720px;
+  width: max-content;
+  margin: 0 auto;
   max-height: 95vh;
   overflow: hidden;
   position: relative;
@@ -303,13 +304,15 @@ async function submit() {
   flex-direction: column;
   gap: 0.7em;
   width: 100%;
-  max-width: 800px;
+  max-width: 720px;
   margin: 0 auto;
+  padding: 0 1em;
 }
 .order-modal__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.1em 2.5%;
+  gap: 1.1em 2em;
+  width: 100%;
 }
 .order-modal__row--full {
   grid-template-columns: 1fr;
@@ -508,9 +511,13 @@ async function submit() {
   .carousel-arrow {
     display: none !important;
   }
-  .order-modal__row.order-modal__row--auto {
-    grid-template-columns: 1fr;
-    gap: 0.7em;
+  .order-modal {
+    width: 95%;
+    min-width: auto;
+    margin: 0 auto;
+  }
+  .order-modal__row {
+    gap: 0.7em 1em;
   }
   .order-modal__fields {
     max-width: 100%;
