@@ -1,102 +1,89 @@
 <template>
   <div class="order-modal__backdrop" @click.self="close">
     <div class="order-modal">
-      <button class="order-modal__close" @click="close" aria-label="Закрыть">×</button>
-      <h2 class="order-modal__title">Получить расчет</h2>
+      <div class="order-modal__header">
+        <h2 class="order-modal__title">Получить расчет</h2>
+        <button class="order-modal__close" @click="close" aria-label="Закрыть">×</button>
+      </div>
       <form class="order-modal__form" @submit.prevent="submit">
-        <div class="order-modal__fields">
-          <!-- Если услуга не выбрана (открыто из хедера) — показываем селект -->
-          <div v-if="!selectedServiceKey && !props.defaultService">
-            <label>Выберите услугу*
-              <select v-model="selectedServiceKey" required>
-                <option disabled value="">Выберите</option>
-                <option v-for="opt in serviceOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
-              </select>
-            </label>
-          </div>
-          <!-- Если услуга выбрана (defaultService) — селект не показываем -->
-          <template v-else>
-            <div v-if="selectedService" class="order-modal__service-label">{{ selectedService.label }}</div>
-            <template v-if="selectedService" v-for="field in selectedService.fields" :key="field.key">
-              <!-- Марка авто -->
-              <label v-if="field.key === 'brand'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <template v-if="!brandInputMode">
-                  <select v-model="form.brand" required>
-                    <option disabled value="">Выберите</option>
-                    <option v-for="b in field.options" :key="b" :value="b">{{ b }}</option>
-                    <option value="Другое">Другое</option>
-                  </select>
-                </template>
-                <template v-else>
-                  <input v-model="form.brand" required placeholder="Введите марку" />
-                </template>
-              </label>
-              <!-- Модель авто -->
-              <label v-else-if="field.key === 'model'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <template v-if="!modelInputMode && getModelOptions.length">
-                  <select v-model="form.model" required>
-                    <option disabled value="">Выберите</option>
-                    <option v-for="m in getModelOptions" :key="m" :value="m">{{ m }}</option>
-                    <option value="Другое">Другое</option>
-                  </select>
-                </template>
-                <template v-else>
-                  <input v-model="form.model" required placeholder="Введите модель" />
-                </template>
-              </label>
-              <!-- Материал (карусель) -->
-              <label v-else-if="field.type === 'carousel'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <!-- Заглушка для компонента-карусели -->
-                <div class="material-carousel">
-                  <div v-for="mat in field.options" :key="mat.value" class="material-carousel__item" :class="{ selected: form.material === mat.value }" @click="form.material = mat.value">
-                    <img :src="mat.img" :alt="mat.label" class="material-carousel__img" />
-                    <div class="material-carousel__label">{{ mat.label }}</div>
-                  </div>
-                </div>
-              </label>
-              <!-- Select -->
-              <label v-else-if="field.type === 'select'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <select v-model="form[field.key]" :required="field.required">
+        <div class="order-modal__scroll">
+          <div class="order-modal__fields">
+            <!-- Если услуга не выбрана (открыто из хедера) — показываем селект -->
+            <div v-if="!selectedServiceKey && !props.defaultService" class="order-modal__row order-modal__row--full">
+              <label>Выберите услугу*
+                <select v-model="selectedServiceKey" required>
                   <option disabled value="">Выберите</option>
-                  <option v-for="opt in field.options" :key="opt.value || opt">{{ opt.label || opt }}</option>
-                  <option v-if="field.allowCustom" value="Другое">Другое</option>
+                  <option v-for="opt in serviceOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
                 </select>
-                <input v-if="field.allowCustom && form[field.key] === 'Другое'" v-model="form[field.key]" placeholder="Введите значение" />
               </label>
-              <!-- Textarea -->
-              <label v-else-if="field.type === 'textarea'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <textarea v-model="form[field.key]" :required="field.required" rows="2" :placeholder="field.label" />
-              </label>
-              <!-- Number -->
-              <label v-else-if="field.type === 'number'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <input v-model="form[field.key]" type="number" :required="field.required" :placeholder="field.label" />
-              </label>
-              <!-- Email -->
-              <label v-else-if="field.type === 'email'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <input v-model="form[field.key]" type="email" :required="field.required" :placeholder="field.label" />
-              </label>
-              <!-- Phone -->
-              <label v-else-if="field.type === 'phone'">
-                {{ field.label }}<span v-if="field.required">*</span>
-                <input v-model="form[field.key]" type="tel" :required="field.required" placeholder="+7 (___) ___-__-__" />
-              </label>
-              <!-- Text (по умолчанию) -->
-              <label v-else>
-                {{ field.label }}<span v-if="field.required">*</span>
-                <input v-model="form[field.key]" :required="field.required" :placeholder="field.label" />
-              </label>
+            </div>
+            <!-- Если услуга выбрана (defaultService) — селект не показываем -->
+            <template v-else>
+              <div v-if="selectedService" class="order-modal__service-label order-modal__row order-modal__row--full">{{ selectedService.label }}</div>
+              <template v-if="selectedService">
+                <div class="order-modal__row order-modal__row--auto">
+                  <label v-for="field in selectedService.fields" :key="field.key" :class="['order-modal__field', `field-${field.key}`]">
+                    {{ field.label }}<span v-if="field.required">*</span>
+                    <template v-if="field.type === 'select'">
+                      <select v-model="form[field.key]" :required="field.required">
+                        <option disabled value="">Выберите</option>
+                        <option v-for="opt in field.options" :key="opt.value || opt">{{ opt.label || opt }}</option>
+                        <option v-if="field.allowCustom" value="Другое">Другое</option>
+                      </select>
+                      <input v-if="field.allowCustom && form[field.key] === 'Другое'" v-model="form[field.key]" placeholder="Введите значение" />
+                    </template>
+                    <template v-else-if="field.type === 'carousel'">
+                      <div class="material-carousel__wrap" @mouseenter="carouselHover = true" @mouseleave="carouselHover = false">
+                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow left" @click="scrollMaterial(-1)">‹</button>
+                        <div class="material-carousel" ref="materialCarouselRef">
+                          <div v-for="mat in field.options" :key="mat.value" class="material-carousel__item" :class="{ selected: form.material === mat.value }" @click="form.material = mat.value">
+                            <img :src="mat.img" :alt="mat.label" class="material-carousel__img" />
+                            <div class="material-carousel__label">{{ mat.label }}</div>
+                          </div>
+                        </div>
+                        <button v-if="showCarouselArrows" type="button" class="carousel-arrow right" @click="scrollMaterial(1)">›</button>
+                      </div>
+                    </template>
+                    <template v-else-if="field.type === 'textarea'">
+                      <textarea v-model="form[field.key]" :required="field.required" rows="2" :placeholder="field.label" />
+                    </template>
+                    <template v-else-if="field.key === 'brand'">
+                      <template v-if="!brandInputMode">
+                        <select v-model="form.brand" required>
+                          <option disabled value="">Выберите</option>
+                          <option v-for="b in field.options" :key="b" :value="b">{{ b }}</option>
+                          <option value="Другое">Другое</option>
+                        </select>
+                      </template>
+                      <template v-else>
+                        <input v-model="form.brand" required placeholder="Введите марку" />
+                      </template>
+                    </template>
+                    <template v-else-if="field.key === 'model'">
+                      <template v-if="!modelInputMode && getModelOptions.length">
+                        <select v-model="form.model" required>
+                          <option disabled value="">Выберите</option>
+                          <option v-for="m in getModelOptions" :key="m" :value="m">{{ m }}</option>
+                          <option value="Другое">Другое</option>
+                        </select>
+                      </template>
+                      <template v-else>
+                        <input v-model="form.model" required placeholder="Введите модель" />
+                      </template>
+                    </template>
+                    <template v-else>
+                      <input v-model="form[field.key]" :required="field.required" :placeholder="field.label" />
+                    </template>
+                  </label>
+                </div>
+              </template>
             </template>
-          </template>
+          </div>
         </div>
-        <button class="order-modal__submit" :disabled="loading">{{ loading ? 'Отправка...' : 'Отправить заказ' }}</button>
-        <div v-if="success" class="order-modal__success">Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+        <div class="order-modal__footer">
+          <button class="order-modal__submit" :disabled="loading">{{ loading ? 'Отправка...' : 'Отправить заказ' }}</button>
+          <div v-if="success" class="order-modal__success">Спасибо! Мы свяжемся с вами в ближайшее время.</div>
+        </div>
       </form>
     </div>
   </div>
@@ -189,6 +176,16 @@ const getModelOptions = computed(() => {
   return POPULAR_MODELS[brand] || [];
 });
 
+const materialCarouselRef = ref(null);
+const carouselHover = ref(false);
+const showCarouselArrows = computed(() => carouselHover.value && window.innerWidth > 700);
+function scrollMaterial(dir) {
+  const el = materialCarouselRef.value;
+  if (el) {
+    el.scrollBy({ left: dir * 120, behavior: 'smooth' });
+  }
+}
+
 function close() {
   emit('close');
 }
@@ -217,53 +214,94 @@ async function submit() {
   background: #232323;
   border-radius: 18px;
   box-shadow: 0 8px 48px #ffd60055;
-  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  padding: 0;
   min-width: 320px;
   max-width: 95vw;
   width: 100%;
   max-height: 95vh;
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
   color: #fff;
-}
-.order-modal__close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  font-size: 2rem;
-  color: #fff;
-  cursor: pointer;
-  opacity: 1;
-  transition: none;
-  z-index: 10;
-}
-.order-modal__title {
-  margin-bottom: 1.2rem;
-  font-size: 1.4rem;
-  font-weight: 900;
-  color: #ffd600;
-  text-align: center;
-}
-.order-modal__form {
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+}
+.order-modal__header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #232323;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2em 1.5em 0.5em 1.5em;
+  min-height: 64px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+}
+.order-modal__footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: #232323;
+  padding: 1em 1.5em 1.5em 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+.order-modal__form {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.order-modal__scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0 1.5em 120px 1.5em;
+  max-height: calc(95vh - 64px - 90px);
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #ffd600 #232323;
+  overflow-x: hidden;
+}
+.order-modal__scroll::-webkit-scrollbar {
+  width: 8px;
+  background: #232323;
+  border-radius: 8px;
+}
+.order-modal__scroll::-webkit-scrollbar-thumb {
+  background: #ffd600;
+  border-radius: 8px;
 }
 .order-modal__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.order-modal__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.2rem 2.5%;
+  gap: 1.1em 2.5%;
+}
+.order-modal__row--full {
+  grid-template-columns: 1fr;
+}
+.order-modal__row--auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.7em 2.5%;
+  width: 100%;
 }
 .order-modal__fields label {
   display: flex;
   flex-direction: column;
   min-width: 140px;
+  max-width: 340px;
   font-size: 1rem;
   gap: 0.3em;
 }
@@ -277,47 +315,48 @@ async function submit() {
   padding: 0.5em 0.8em;
   font-size: 1rem;
   margin-top: 0.1em;
+  max-width: 100%;
 }
 .order-modal__fields input:focus,
 .order-modal__fields select:focus,
 .order-modal__fields textarea:focus {
   outline: 2px solid #ffd600;
 }
-.order-modal__submit {
-  margin: 1.2em auto 0 auto;
-  background: linear-gradient(90deg, #ffd600 60%, #fff700 100%);
-  color: #181818;
-  font-weight: 900;
-  font-size: 1.13rem;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 32px;
-  box-shadow: 0 2px 18px #ffd60055, 0 0 0 2px #ffd600cc;
-  cursor: pointer;
-  transition: box-shadow 0.2s, background 0.2s;
-}
-.order-modal__submit:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-.order-modal__success {
-  color: #ffd600;
-  text-align: center;
-  margin-top: 1em;
-  font-weight: 700;
-}
-.order-modal__service-label {
-  display: block;
-  font-size: 1.08em;
-  font-weight: 700;
-  color: #ffd600;
-  margin-bottom: 0.5em;
+.material-carousel__wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  overflow: visible;
+  padding-bottom: 0.2em;
+  position: relative;
+  width: 100%;
 }
 .material-carousel {
   display: flex;
   gap: 0.7em;
-  margin: 0.5em 0;
-  overflow-x: auto;
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.carousel-arrow {
+  background: rgba(35,35,35,0.7);
+  color: #ffd600;
+  border: none;
+  font-size: 2rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ffd60033;
+  transition: background 0.2s, opacity 0.2s;
+  z-index: 2;
+  opacity: 0.7;
+}
+.material-carousel__wrap:hover .carousel-arrow {
+  display: flex;
 }
 .material-carousel__item {
   display: flex;
@@ -347,14 +386,71 @@ async function submit() {
   color: #ffd600;
   text-align: center;
 }
+.order-modal__title {
+  margin-bottom: 1.2rem;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #ffd600;
+  text-align: center;
+}
+.order-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  opacity: 1;
+  transition: none;
+  z-index: 10;
+}
+.order-modal__service-label {
+  display: block;
+  font-size: 1.08em;
+  font-weight: 700;
+  color: #ffd600;
+  margin-bottom: 0.5em;
+}
+.order-modal__submit {
+  margin: 1.2em auto 0 auto;
+  background: linear-gradient(90deg, #ffd600 60%, #fff700 100%);
+  color: #181818;
+  font-weight: 900;
+  font-size: 1.13rem;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  box-shadow: 0 2px 18px #ffd60055, 0 0 0 2px #ffd600cc;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.order-modal__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.order-modal__success {
+  color: #ffd600;
+  text-align: center;
+  margin-top: 1em;
+  font-weight: 700;
+}
 @media (max-width: 700px) {
-  .order-modal {
-    padding: 1.2rem 0.5rem 1rem 0.5rem;
-    min-width: 0;
+  .carousel-arrow {
+    display: none !important;
+  }
+  .order-modal__row.order-modal__row--auto {
+    grid-template-columns: 1fr;
+    gap: 0.7em;
   }
   .order-modal__fields {
-    grid-template-columns: 1fr;
-    gap: 0.7rem;
+    max-width: 100%;
+    padding: 0;
   }
 }
 @keyframes fadeIn {
