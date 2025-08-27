@@ -42,32 +42,26 @@ import ImperialSection from './ImperialSection.vue';
 
 const categories = [
   { key: 'peretyazhka', label: 'Перетяжка' },
-  { key: 'tuning', label: 'Тюнинг' },
   { key: 'restoration', label: 'Реставрация' },
   { key: 'sewing', label: 'Пошив' },
   { key: 'embroidery', label: 'Вышивка' },
-  { key: 'electronics', label: 'Электрика' },
+  { key: 'electronics', label: 'Автоэлектрика' },
   { key: 'carpets', label: 'Ковры' },
 ];
 
 const prices = {
   peretyazhka: [
-    { title: 'Сиденья', price: 'от 7 000' },
+    { title: 'Сиденья', price: 'от 50 000' },
     { title: 'Руль', price: 'от 2 500' },
     { title: 'Потолок', price: 'от 6 000' },
   ],
-  tuning: [
-    { title: 'Тюнинг салона', price: 'от 12 000' },
-    { title: 'Детали интерьера', price: 'от 3 000' },
-    { title: 'Панели', price: 'от 4 000' },
-  ],
   restoration: [
-    { title: 'Восстановление кожи', price: 'от 4 500' },
-    { title: 'Ремонт сидений', price: 'от 3 500' },
-    { title: 'Пластик', price: 'от 2 000' },
+    { title: 'Восстановление любых деталей салона', price: 'от 1 500 000' },
+    { title: 'Современная технология ремонта', price: 'от 1 500 000' },
+    { title: 'Подбор материалов разных производителей', price: 'от 1 500 000' },
   ],
   sewing: [
-    { title: 'Пошив чехлов', price: 'от 5 000' },
+    { title: 'Изготовление и пошив чехлов', price: 'от 15 000' },
     { title: 'Пошив подлокотника', price: 'от 2 000' },
     { title: 'Пошив ковриков', price: 'от 2 500' },
   ],
@@ -77,14 +71,14 @@ const prices = {
     { title: 'Именная вышивка', price: 'от 1 800' },
   ],
   electronics: [
-    { title: 'Установка подсветки', price: 'от 3 000' },
-    { title: 'Установка USB', price: 'от 1 200' },
-    { title: 'Мониторинг', price: 'от 2 500' },
+    { title: 'Установка электроподогревов в сидения', price: 'от 1 000' },
+    { title: 'Электроподогрев руля', price: 'от 1 000' },
+    { title: 'Диагностика автокондиционера', price: 'от 1 000' },
   ],
   carpets: [
-    { title: 'EVO ковры', price: 'от 2 000' },
-    { title: '3D ковры', price: 'от 2 500' },
-    { title: 'Органайзеры', price: 'от 1 500' },
+    { title: 'EVO ковры', price: 'от 4 500' },
+    { title: '3D ковры', price: 'от 4 500' },
+    { title: 'Органайзеры', price: 'от 4 500' },
   ],
 };
 

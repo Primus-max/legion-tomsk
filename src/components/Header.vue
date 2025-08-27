@@ -1,8 +1,9 @@
 <template>
   <header class="header">
     <div class="header__container">
-      <div class="header__logo desktop-only">
-        <span>Legion</span>
+      <div class="header__logo">
+        <img src="../assets/logo.svg" alt="Legion" class="header__logo-img" />
+        <span class="header__logo-text">Legion Tomsk</span>
       </div>
       <nav class="header__nav" :class="{ 'is-open': menuOpen }">
         <button class="header__close mobile-only" @click="menuOpen = false" aria-label="Закрыть меню">&times;</button>
@@ -70,11 +71,22 @@ export default {
   padding: 0.5rem 1rem;
   position: relative;
 }
-.header__logo span {
-  font-size: 2.2rem;
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 2rem;
+}
+.header__logo-img {
+  height: 45px;
+  width: auto;
+  filter: drop-shadow(0 2px 8px rgba(255,214,0,0.10));
+}
+.header__logo-text {
+  font-size: 1.5rem;
   font-weight: 900;
   color: var(--color-accent);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-shadow: 0 2px 8px rgba(255,214,0,0.10);
   font-family: 'Manrope', 'Inter', 'Roboto', Arial, sans-serif;
 }
@@ -218,7 +230,15 @@ export default {
     min-height: 48px;
   }
   .header__logo {
-    display: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .header__logo-img {
+    height: 32px;
+  }
+  .header__logo-text {
+    font-size: 1rem;
   }
   .desktop-only {
     display: none !important;

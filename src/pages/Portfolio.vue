@@ -48,7 +48,6 @@ import FooterSection from '../components/sections/FooterSection.vue';
 
 const categories = [
   { id: 'peretyazhka', title: 'Перетяжка', icon: '🪡', desc: 'Премиальная перетяжка салона и отдельных элементов.' },
-  { id: 'tyuning', title: 'Тюнинг', icon: '⚡', desc: 'Уникальный тюнинг салона и интерьера.' },
   { id: 'restavraciya', title: 'Реставрация', icon: '🛠️', desc: 'Восстановление и реставрация салона.' },
   { id: 'poshiv', title: 'Пошив', icon: '🧵', desc: 'Индивидуальный пошив элементов интерьера.' },
   { id: 'vyshivka', title: 'Вышивка', icon: '✒️', desc: 'Вышивка логотипов, надписей и узоров.' },
@@ -68,12 +67,6 @@ const works = {
     { id: 8, image: 'https://placehold.co/400x300?text=Перетяжка+8' },
     { id: 9, image: 'https://placehold.co/400x300?text=Перетяжка+9' },
     { id: 10, image: 'https://placehold.co/400x300?text=Перетяжка+10' },
-  ],
-  tyuning: [
-    { id: 1, image: 'https://placehold.co/400x300?text=Тюнинг+1' },
-    { id: 2, image: 'https://placehold.co/400x300?text=Тюнинг+2' },
-    { id: 3, image: 'https://placehold.co/400x300?text=Тюнинг+3' },
-    { id: 4, image: 'https://placehold.co/400x300?text=Тюнинг+4' },
   ],
   restavraciya: [
     { id: 1, image: 'https://placehold.co/400x300?text=Реставрация+1' },

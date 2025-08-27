@@ -26,26 +26,18 @@ const services = [
     description: 'Полная перетяжка сидений премиальной кожей с учётом всех особенностей вашего автомобиля',
     image: '/images/seats.svg',
     link: '/services#peretyazhka',
-    price: 25000
+    price: 50000
   },
   {
     id: 2,
-    title: 'Тюнинг',
-    description: 'Профессиональный тюнинг салона автомобиля с использованием премиальных материалов и технологий',
-    image: '/images/tuning.svg',
-    link: '/services#tyuning',
-    price: 30000
-  },
-  {
-    id: 3,
     title: 'Реставрация',
     description: 'Восстановление и реставрация элементов салона до состояния нового',
     image: '/images/restoration.svg',
     link: '/services#restavratsiya',
-    price: 20000
+    price: 1500000
   },
   {
-    id: 4,
+    id: 3,
     title: 'Изготовление и пошив',
     description: 'Индивидуальный пошив элементов салона по вашим размерам и пожеланиям',
     image: '/images/sewing.svg',
@@ -53,28 +45,28 @@ const services = [
     price: 15000
   },
   {
-    id: 5,
+    id: 4,
     title: 'Вышивка',
     description: 'Нанесение вышивки любой сложности на элементы салона',
     image: '/images/embroidery.svg',
     link: '/services#vyshivka',
-    price: 5000
+    price: 1500
   },
   {
-    id: 6,
+    id: 5,
     title: 'Автоэлектрика',
     description: 'Установка и настройка электрооборудования в салоне автомобиля',
     image: '/images/electronics.svg',
     link: '/services#elektro',
-    price: 10000
+    price: 1000
   },
   {
-    id: 7,
+    id: 6,
     title: 'EVO и 3D ковры / органайзеры',
     description: 'Изготовление современных ковров с высоким бортом и органайзеров',
     image: '/images/carpets.svg',
     link: '/services#kovry',
-    price: 8000
+    price: 4500
   }
 ];
 </script>

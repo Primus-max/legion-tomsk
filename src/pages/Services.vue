@@ -4,7 +4,7 @@
     <section id="peretyazhka" class="service-block service-block--alt">
       <div class="service-block__header">
         <h2>Перетяжка салона</h2>
-        <p class="service-block__lead">Премиальная перетяжка салона автомобиля с гарантией качества и индивидуальным подходом.</p>
+        <p class="service-block__lead">Премиальная перетяжка салона автомобиля с индивидуальным подходом.</p>
       </div>
       <div class="service-block__content">
         <ServiceGallery :images="peretyazhkaImages" @open-modal="openModal('peretyazhka', $event)" />
@@ -12,11 +12,14 @@
           <p>
             Используем только лучшие материалы: натуральная кожа, алькантара, экокожа. Перетяжка салона — это не только обновление внешнего вида, но и повышение комфорта, статуса и стоимости вашего авто.
           </p>
+          <p>
+            Если вам нужно поменять обшивку автомобиля, дизайнер поможет вам выбрать материалы, предложит необычные и оригинальные решения.
+          </p>
           <ul class="service-block__benefits">
             <li>Индивидуальный подбор материалов и дизайна</li>
-            <li>Гарантия на все работы</li>
             <li>Опытные мастера с портфолио</li>
             <li>Соблюдение сроков</li>
+            <li>Консультация дизайнера</li>
           </ul>
           <button class="service-block__cta">Заказать перетяжку</button>
         </div>
@@ -27,37 +30,6 @@
           <img src="https://placehold.co/300x200?text=Перетяжка+1" alt="Пример работы 1" />
           <img src="https://placehold.co/300x200?text=Перетяжка+2" alt="Пример работы 2" />
           <img src="https://placehold.co/300x200?text=Перетяжка+3" alt="Пример работы 3" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Тюнинг -->
-    <section id="tyuning" class="service-block">
-      <div class="service-block__header">
-        <h2>Тюнинг салона</h2>
-        <p class="service-block__lead">Уникальный тюнинг салона с использованием современных материалов и технологий.</p>
-      </div>
-      <div class="service-block__content">
-        <ServiceGallery :images="tyuningImages" @open-modal="openModal('tyuning', $event)" />
-        <div class="service-block__desc">
-          <p>
-            Мы предлагаем индивидуальные решения по тюнингу салона: эксклюзивные вставки, подсветка, нестандартные материалы, интеграция современных технологий. Ваш салон станет уникальным и подчеркнёт ваш стиль.
-          </p>
-          <ul class="service-block__benefits">
-            <li>Эксклюзивные материалы и дизайн</li>
-            <li>Профессиональная установка электроники</li>
-            <li>Гарантия на все работы</li>
-            <li>Соблюдение сроков</li>
-          </ul>
-          <button class="service-block__cta">Заказать тюнинг</button>
-        </div>
-      </div>
-      <div class="service-block__portfolio">
-        <h3>Примеры работ</h3>
-        <div class="portfolio-gallery">
-          <img src="https://placehold.co/300x200?text=Тюнинг+1" alt="Пример тюнинга 1" />
-          <img src="https://placehold.co/300x200?text=Тюнинг+2" alt="Пример тюнинга 2" />
-          <img src="https://placehold.co/300x200?text=Тюнинг+3" alt="Пример тюнинга 3" />
         </div>
       </div>
     </section>
@@ -75,9 +47,9 @@
             Реставрация — это комплекс работ по восстановлению внешнего вида и функциональности салона. Мы устраняем потертости, царапины, восстанавливаем форму и цвет, возвращаем салону первозданный вид.
           </p>
           <ul class="service-block__benefits">
-            <li>Восстановление любых материалов</li>
-            <li>Современные технологии ремонта</li>
-            <li>Гарантия на результат</li>
+            <li>Восстановление любых деталей салона</li>
+            <li>Современная технология ремонта</li>
+            <li>Подбор материалов разных производителей</li>
             <li>Быстро и качественно</li>
           </ul>
           <button class="service-block__cta">Заказать реставрацию</button>
@@ -109,7 +81,7 @@
             <li>Точные замеры и индивидуальный подход</li>
             <li>Большой выбор материалов и цветов</li>
             <li>Профессиональный пошив</li>
-            <li>Гарантия на изделия</li>
+            <li>Качественные материалы</li>
           </ul>
           <button class="service-block__cta">Заказать пошив</button>
         </div>
@@ -165,13 +137,13 @@
         <ServiceGallery :images="elektroImages" @open-modal="openModal('elektro', $event)" />
         <div class="service-block__desc">
           <p>
-            Устанавливаем и настраиваем любое электрооборудование: подсветка, мультимедиа, зарядки, сигнализации, парктроники и многое другое. Гарантия на все работы.
+            Устанавливаем электроподогревы в сидения, электроподогрев руля, проводим диагностику автокондиционера. Используем оборудование от известных поставщиков.
           </p>
           <ul class="service-block__benefits">
-            <li>Профессиональный монтаж</li>
-            <li>Современные технологии</li>
-            <li>Гарантия на работы и оборудование</li>
-            <li>Безопасность и аккуратность</li>
+            <li>Установка электроподогревов в сидения</li>
+            <li>Электроподогрев руля</li>
+            <li>Диагностика автокондиционера</li>
+            <li>Оборудование от известных поставщиков</li>
           </ul>
           <button class="service-block__cta">Заказать автоэлектрику</button>
         </div>
@@ -238,11 +210,7 @@ const peretyazhkaImages = [
   { src: 'https://placehold.co/300x200?text=Перетяжка+2', alt: 'Перетяжка 2' },
   { src: 'https://placehold.co/300x200?text=Перетяжка+3', alt: 'Перетяжка 3' }
 ];
-const tyuningImages = [
-  { src: 'https://placehold.co/300x200?text=Тюнинг+1', alt: 'Тюнинг 1' },
-  { src: 'https://placehold.co/300x200?text=Тюнинг+2', alt: 'Тюнинг 2' },
-  { src: 'https://placehold.co/300x200?text=Тюнинг+3', alt: 'Тюнинг 3' }
-];
+
 const restavratsiyaImages = [
   { src: 'https://placehold.co/300x200?text=Реставрация+1', alt: 'Реставрация 1' },
   { src: 'https://placehold.co/300x200?text=Реставрация+2', alt: 'Реставрация 2' },
@@ -276,7 +244,6 @@ const modalIndex = ref(0);
 function openModal(type, index) {
   switch(type) {
     case 'peretyazhka': modalImages.value = peretyazhkaImages; break;
-    case 'tyuning': modalImages.value = tyuningImages; break;
     case 'restavratsiya': modalImages.value = restavratsiyaImages; break;
     case 'poshiv': modalImages.value = poshivImages; break;
     case 'vyshivka': modalImages.value = vyshivkaImages; break;

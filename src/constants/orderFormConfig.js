@@ -80,27 +80,12 @@ export const SERVICES = [
     ],
   }),
   new ServiceConfig({
-    key: 'tuning',
-    label: 'Тюнинг',
-    fields: [
-      new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
-      new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Тюнинг салона', 'Детали интерьера', 'Панели', 'Комбинированно'] }),
-      new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: false, options: MATERIALS }),
-      new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
-      new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
-      new OrderField({ key: 'name', label: 'Имя', type: 'text', required: true }),
-      new OrderField({ key: 'phone', label: 'Телефон', type: 'phone', required: true }),
-      new OrderField({ key: 'email', label: 'Email', type: 'email', required: false }),
-    ],
-  }),
-  new ServiceConfig({
     key: 'restoration',
     label: 'Реставрация',
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Восстановление кожи', 'Ремонт сидений', 'Пластик', 'Комбинированно'] }),
+      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Восстановление любых деталей салона', 'Современная технология ремонта', 'Подбор материалов разных производителей', 'Комбинированно'] }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
       new OrderField({ key: 'name', label: 'Имя', type: 'text', required: true }),
@@ -114,7 +99,7 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Пошив чехлов', 'Пошив подлокотника', 'Пошив ковриков', 'Комбинированно'] }),
+      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Изготовление и пошив чехлов', 'Пошив подлокотника', 'Пошив ковриков', 'Комбинированно'] }),
       new OrderField({ key: 'material', label: 'Материал', type: 'carousel', required: true, options: MATERIALS }),
       new OrderField({ key: 'color', label: 'Цвет', type: 'select', required: false, options: COLORS, allowCustom: true }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
@@ -143,7 +128,7 @@ export const SERVICES = [
     fields: [
       new OrderField({ key: 'brand', label: 'Марка авто', type: 'select', required: true, options: POPULAR_BRANDS, allowCustom: true }),
       new OrderField({ key: 'model', label: 'Модель авто', type: 'select', required: true, options: [], allowCustom: true }),
-      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Установка подсветки', 'Установка USB', 'Мониторинг', 'Другое'] }),
+      new OrderField({ key: 'workType', label: 'Тип работ', type: 'select', required: true, options: ['Установка электроподогревов в сидения', 'Электроподогрев руля', 'Диагностика автокондиционера', 'Другое'] }),
       new OrderField({ key: 'comment', label: 'Комментарий', type: 'textarea', required: false }),
       new OrderField({ key: 'name', label: 'Имя', type: 'text', required: true }),
       new OrderField({ key: 'phone', label: 'Телефон', type: 'phone', required: true }),
